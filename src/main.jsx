@@ -73,11 +73,12 @@ function Header({ page = 'home', light = false }) {
         {open ? <X /> : <Menu />}
       </button>
       <nav className={cx('site-nav', open && 'is-open')} aria-label="主要選單">
+        <a href={sectionLink('#why-drink')} onClick={close}>為什麼喝</a>
+        <a href={sectionLink('#moments')} onClick={close}>什麼時候喝</a>
+        <a href={sectionLink('#why-us')} onClick={close}>為什麼選糖鼎</a>
+        <a href={sectionLink('#world')} onClick={close}>哪裡買</a>
+        <a href={sectionLink('#care')} onClick={close}>社會回饋</a>
         <a href="/about" onClick={close}>關於糖鼎</a>
-        <a href={sectionLink('#story')} onClick={close}>品牌特色</a>
-        <a href={sectionLink('#care')} onClick={close}>照顧與公益</a>
-        <a href={sectionLink('#flavors')} onClick={close}>多重風味</a>
-        <a href={sectionLink('#world')} onClick={close}>全球通路</a>
         <a href="https://www.gingertw.com/" target="_blank" rel="noreferrer" onClick={close}>前往官網 <ArrowUpRight size={16} /></a>
       </nav>
     </header>
@@ -94,7 +95,7 @@ function Hero() {
         <p className="eyebrow hero-eyebrow">真材實料　　一顆剛好</p>
         <h1><span>一顆黑糖磚</span><span>沖成一大杯</span></h1>
         <p className="hero-lead"><span>甜度退後</span><span>食材的風味　才喝得出來</span></p>
-        <a className="text-link" href="#difference">為什麼是糖鼎 <ArrowDown size={17} /></a>
+        <a className="text-link" href="#why-drink">從這一杯開始 <ArrowDown size={17} /></a>
       </div>
       <div className="hero-media" aria-label="糖鼎黑糖飲與原料情境圖">
         <img src="/assets/hero-tea-ritual.webp" alt="熱黑糖飲 黑糖磚 老薑與紅棗" />
@@ -108,14 +109,14 @@ function Hero() {
 
 function Story() {
   return (
-    <section className="section story" id="story">
+    <section className="section story" id="why-us">
       <Reveal className="story-visual">
         <img src="/assets/flavor-story.webp" alt="糖鼎五種風味原料與黑糖磚" loading="lazy" />
         <span>五種風味　各自完整</span>
       </Reveal>
       <div className="story-content">
         <Reveal className="section-heading">
-          <p className="eyebrow">產品特色</p>
+          <p className="eyebrow">為什麼選糖鼎</p>
           <h2><span>時間熬好</span><span>日常就簡單</span></h2>
         </Reveal>
         <div className="feature-list">
@@ -134,7 +135,7 @@ function Story() {
 
 function ValueStory() {
   return (
-    <section className="section value-story" id="difference" aria-labelledby="value-story-title">
+    <section className="section value-story" id="why-drink" aria-labelledby="value-story-title">
       <Reveal className="value-story__visual">
         <div className="value-cup" aria-hidden="true">
           <div className="value-cup__steam"><i /><i /><i /></div>
@@ -154,7 +155,7 @@ function ValueStory() {
 
       <div className="value-story__content">
         <Reveal className="section-heading">
-          <p className="eyebrow">一顆剛好</p>
+          <p className="eyebrow">為什麼喝　　一顆剛好</p>
           <h2 id="value-story-title"><span>不是買一顆糖</span><span>是買一杯真實風味</span></h2>
           <p>一顆定量　不用秤不用猜<br />沖成一大杯　仍然喝得到食材主角</p>
         </Reveal>
@@ -316,28 +317,47 @@ function Flavors() {
   const flavor = flavors.find((item) => item.id === active);
   useEffect(() => {
     flavors.forEach((item) => {
-      const image = new Image();
-      image.src = item.image;
+      [item.image, item.sceneImage].forEach((src) => {
+        const image = new Image();
+        image.src = src;
+      });
     });
   }, []);
   return (
-    <section className="section flavors" id="flavors">
-      <Reveal className="section-heading section-heading--center">
-        <p className="eyebrow">今天想喝什麼</p>
-        <h2><span>五種風味</span><span>五種不同日常</span></h2>
+    <section className="section flavors moments" id="moments">
+      <Reveal className="section-heading section-heading--center moments-heading">
+        <p className="eyebrow">什麼時候喝</p>
+        <h2><span>今天這一杯</span><span>想留給誰</span></h2>
+        <p>給自己一點時間<br />也把溫柔留給在意的人</p>
       </Reveal>
-      <div className="flavor-layout">
-        <FlavorStage flavor={flavor} />
-        <div className="flavor-copy" key={`${flavor.id}-copy`}>
-          <p className="flavor-note">{flavor.note}</p>
-          <h3>{flavor.name}</h3>
-          <p>{flavor.description}</p>
-          <p className="flavor-moment">適合　{flavor.moment}</p>
-          <div className="flavor-tags">{flavor.ingredients.map((item) => <span key={item}>{item}</span>)}</div>
+
+      <div className="moment-layout" key={`${flavor.id}-moment`} aria-live="polite">
+        <div className="moment-scene">
+          <img src={flavor.sceneImage} alt={flavor.sceneAlt} />
+          <span>{flavor.sceneLabel}</span>
+        </div>
+
+        <div className="moment-story">
+          <p className="moment-for">{flavor.sceneFor}</p>
+          <h3>{flavor.sceneTitle.map((line) => <span key={line}>{line}</span>)}</h3>
+          <p className="moment-body">{flavor.sceneBody.split('\n').map((line) => <React.Fragment key={line}>{line}<br /></React.Fragment>)}</p>
+          <div className="moment-flavor-name">
+            <img src={flavor.image} alt="" />
+            <div><small>{flavor.note}</small><strong>{flavor.name}</strong></div>
+          </div>
+        </div>
+
+        <div className="moment-ingredients">
+          <FlavorStage flavor={flavor} />
+          <div className="flavor-copy" key={`${flavor.id}-copy`}>
+            <p>{flavor.description}</p>
+            <div className="flavor-tags">{flavor.ingredients.map((item) => <span key={item}>{item}</span>)}</div>
+          </div>
         </div>
       </div>
-      <div className="flavor-picker" role="tablist" aria-label="選擇口味">
-        {flavors.map((item, index) => (
+
+      <div className="flavor-picker moment-picker" role="tablist" aria-label="選擇飲用情境">
+        {flavors.map((item) => (
           <button
             key={item.id}
             className={cx('flavor-option', item.id === active && 'is-active')}
@@ -347,7 +367,7 @@ function Flavors() {
             aria-selected={item.id === active}
           >
             <span className="flavor-option__art"><img src={item.image} alt="" /></span>
-            <span className="flavor-option__copy"><small>風味 {String(index + 1).padStart(2, '0')}</small><strong>{item.short}</strong></span>
+            <span className="flavor-option__copy"><small>{item.sceneLabel}</small><strong>{item.short}</strong></span>
             <i aria-hidden="true" />
           </button>
         ))}
@@ -508,7 +528,7 @@ function Closing({ about = false }) {
         <h2>{about ? <><span>故事從家人開始</span><span>溫暖繼續往世界走</span></> : <><span>下一杯</span><span>想在哪裡遇見糖鼎</span></>}</h2>
         <p>{about ? '認識風味　尋找通路　讓照顧成為每一天的日常' : '找商品　看靈感　一起走向更多地方'}</p>
         <div className="closing-actions">
-          {about && <a href="/#flavors">認識糖鼎風味 <ArrowRight size={18} /></a>}
+          {about && <a href="/#moments">認識糖鼎風味 <ArrowRight size={18} /></a>}
           {!about && <a href="https://www.gingertw.com/" target="_blank" rel="noreferrer">前往官方網站 <ArrowUpRight size={18} /></a>}
           <a href={about ? '/#world' : 'https://www.youtube.com/@%E7%B3%96%E9%BC%8E%E9%BB%91%E7%B3%96'} target={about ? undefined : '_blank'} rel={about ? undefined : 'noreferrer'}>{about ? '查看全球通路' : '觀看 YouTube'} {about ? <ArrowRight size={18} /> : <ArrowUpRight size={18} />}</a>
         </div>
@@ -654,7 +674,7 @@ function App() {
     if (!isAboutPage) document.title = '糖鼎 SUGAR DING｜台灣黑糖走進世界日常';
   }, [isAboutPage]);
   if (isAboutPage) return <AboutPage />;
-  return <><Hero /><main><Story /><ValueStory /><BrandProof /><AboutTeaser /><Care /><Flavors /><WorldMap /></main><Closing /></>;
+  return <><Hero /><main><ValueStory /><Flavors /><Story /><BrandProof /><AboutTeaser /><WorldMap /><Care /></main><Closing /></>;
 }
 
 createRoot(document.getElementById('root')).render(<App />);
