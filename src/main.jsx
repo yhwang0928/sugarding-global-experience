@@ -80,45 +80,6 @@ function Header() {
   );
 }
 
-function CountryIcon({ id }) {
-  const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' };
-  return (
-    <svg className="country-icon" viewBox="0 0 64 64" aria-hidden="true">
-      {id === 'taiwan' && <g {...common}>
-        <path d="M32 5v7M28 12h8l1.5 5h-11L28 12ZM25 17h14l-2 6H27l-2-6ZM27 23h10l2 6H25l2-6ZM25 29h14l-2 6H27l-2-6ZM27 35h10l2 6H25l2-6ZM25 41h14l-2 7H27l-2-7Z" />
-        <path d="M28 48h8v8M23 56h18" />
-      </g>}
-      {id === 'usa' && <g {...common}>
-        <path d="M24 55h23M27 50h17l2 5H25l2-5ZM29 39h13l2 11H27l2-11Z" />
-        <path d="M31 39l-2-11 4-4 5 3 2 12M33 24l-1-5M32 19a4 4 0 1 1 8 0c0 2-1.8 4-4 4" />
-        <path d="M37 27l5-8M42 19l2-7M44 12l3-3M44 12l4 1M44 12l-1-4M48 9l2 2M42 9l2-1" />
-        <path d="M32 19l-3-1M33 16l-2-3M37 15v-4M40 16l2-3" />
-      </g>}
-      {id === 'japan' && <g {...common}>
-        <circle cx="47" cy="17" r="7" />
-        <path d="M7 49l18-25 8 12 6-8 18 21H7Z" />
-        <path d="M17 36l8-12 5 8 3 4M10 49h44" />
-      </g>}
-      {id === 'malaysia' && <g {...common}>
-        <path d="M17 53h14M33 53h14M20 17h8v36H18l2-36ZM36 17h8l2 36H34l2-36Z" />
-        <path d="M22 17l2-8 2 8M38 17l2-8 2 8M21 26h8M20 34h10M19 42h12M35 26h10M35 34h10M34 42h12" />
-        <path d="M29 32h7v6h-7M24 9V5M40 9V5" />
-      </g>}
-      {id === 'singapore' && <g {...common}>
-        <path d="M14 49h36M17 45h8V25h-8v20ZM28 45h8V25h-8v20ZM39 45h8V25h-8v20Z" />
-        <path d="M12 21c8 2 18-3 27-1 5 1 9 0 13-3l-2 8H15l-3-4Z" />
-        <path d="M11 54c7-4 14 4 21 0s14 4 21 0" />
-      </g>}
-      {id === 'hongkong' && <g {...common}>
-        <path d="M31 11v36M31 15c-7 3-13 10-16 20h16V15ZM33 17c8 4 13 10 16 18H33V17Z" />
-        <path d="M12 40h40l-5 9H18l-6-9ZM23 49l4 5h14l4-5" />
-        <path d="M9 56c7-4 14 4 23 0s16 4 23 0" />
-        <path d="M41 13l4 4-4 4M48 10l5 5-5 5" />
-      </g>}
-    </svg>
-  );
-}
-
 function Hero() {
   return (
     <section className="hero" id="top">
@@ -172,6 +133,16 @@ function FlavorStage({ flavor }) {
     <div className="flavor-stage" style={{ '--flavor': flavor.color }} key={flavor.id}>
       <div className="flavor-halo" />
       <img className="flavor-image" src={flavor.image} alt={`${flavor.name}黑糖磚與原料`} loading="lazy" />
+      <div className="ingredient-orbits" aria-hidden="true">
+        {flavor.particles.map((particle, index) => (
+          <span
+            className={`orbit-track orbit-track--${index + 1}`}
+            key={`${particle}-${index}`}
+          >
+            <i className={`ingredient-particle ingredient-particle--${particle}`} />
+          </span>
+        ))}
+      </div>
       <span className="flavor-spark flavor-spark--1" />
       <span className="flavor-spark flavor-spark--2" />
       <span className="flavor-spark flavor-spark--3" />
@@ -231,8 +202,9 @@ function MarketPanel({ market }) {
       {market.channels.length ? (
         <div className="channel-list">
           {market.channels.map((channel, index) => (
-            <div className="channel-item" key={channel} style={{ '--item-delay': `${index * 38}ms` }}>
-              <span>{String(index + 1).padStart(2, '0')}</span><p>{channel}</p>
+            <div className="channel-item" key={channel.name} style={{ '--item-delay': `${index * 38}ms` }}>
+              <span className="channel-logo"><img src={channel.logo} alt="" loading="lazy" /></span>
+              <p>{channel.name}</p>
             </div>
           ))}
         </div>
@@ -279,9 +251,19 @@ function WorldMap() {
           <ComposableMap projectionConfig={{ scale: 138 }} width={800} height={480}>
             <ZoomableGroup center={[10, 8]} zoom={1} minZoom={1} maxZoom={1}>
               <Geographies geography={worldData}>
-                {({ geographies }) => geographies.map((geo) => (
-                  <Geography key={geo.rsmKey} geography={geo} className="map-country" tabIndex={-1} />
-                ))}
+                {({ geographies }) => geographies.map((geo) => {
+                  const geoId = String(geo.id);
+                  const isMarket = markets.some((market) => market.geoId === geoId);
+                  const isSelected = active.geoId === geoId;
+                  return (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      className={cx('map-country', isMarket && 'is-market', isSelected && 'is-selected')}
+                      tabIndex={-1}
+                    />
+                  );
+                })}
               </Geographies>
               {active.id !== 'taiwan' && (
                 <Line
@@ -324,7 +306,7 @@ function WorldMap() {
               role="tab"
               aria-selected={activeId === market.id}
             >
-              <span><CountryIcon id={market.id} /></span><small>{market.name}</small>
+              <span><img src={market.icon} alt={`${market.name}代表地標`} /></span><small>{market.name}</small>
             </button>
           ))}
         </div>
