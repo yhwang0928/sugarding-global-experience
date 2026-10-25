@@ -91,17 +91,17 @@ function Hero() {
       <div className="steam steam--one" aria-hidden="true" />
       <div className="steam steam--two" aria-hidden="true" />
       <div className="hero-copy">
-        <p className="eyebrow hero-eyebrow">一塊黑糖　　一段陪伴</p>
-        <h1><span>把台灣的熬煮</span><span>帶進世界日常</span></h1>
-        <p className="hero-lead"><span>一沖即飲</span><span>多種風味　各自完整</span></p>
-        <a className="text-link" href="#flavors">看看口味 <ArrowDown size={17} /></a>
+        <p className="eyebrow hero-eyebrow">真材實料　　一顆剛好</p>
+        <h1><span>一顆黑糖磚</span><span>沖成一大杯</span></h1>
+        <p className="hero-lead"><span>甜度退後</span><span>食材的風味　才喝得出來</span></p>
+        <a className="text-link" href="#difference">為什麼是糖鼎 <ArrowDown size={17} /></a>
       </div>
       <div className="hero-media" aria-label="糖鼎黑糖飲與原料情境圖">
         <img src="/assets/hero-tea-ritual.webp" alt="熱黑糖飲 黑糖磚 老薑與紅棗" />
         <span className="hero-media-ring hero-media-ring--one" />
         <span className="hero-media-ring hero-media-ring--two" />
       </div>
-      <div className="hero-index" aria-hidden="true"><span>01</span><i /><span>世界裡的一杯糖鼎</span></div>
+      <div className="hero-index" aria-hidden="true"><span>01</span><i /><span>一杯剛好的真材實料</span></div>
     </section>
   );
 }
@@ -127,6 +127,54 @@ function Story() {
             </Reveal>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function ValueStory() {
+  return (
+    <section className="section value-story" id="difference" aria-labelledby="value-story-title">
+      <Reveal className="value-story__visual">
+        <div className="value-cup" aria-hidden="true">
+          <div className="value-cup__steam"><i /><i /><i /></div>
+          <div className="value-cup__glass">
+            <div className="value-cup__tea" />
+            <img src="/assets/flavor-cube-only.webp" alt="" />
+          </div>
+          <div className="value-cup__measure">
+            <span><b>400</b> ml</span>
+            <span><b>300</b></span>
+            <span><b>200</b></span>
+            <span><b>100</b></span>
+          </div>
+        </div>
+        <p>建議沖泡水量　300–400ml</p>
+      </Reveal>
+
+      <div className="value-story__content">
+        <Reveal className="section-heading">
+          <p className="eyebrow">一顆剛好</p>
+          <h2 id="value-story-title"><span>不是買一顆糖</span><span>是買一杯真實風味</span></h2>
+          <p>一顆定量　不用秤不用猜<br />沖成一大杯　仍然喝得到食材主角</p>
+        </Reveal>
+
+        <div className="value-metrics">
+          <Reveal className="value-metric" delay={80}>
+            <strong>30<small>g</small></strong><span>一顆定量</span>
+          </Reveal>
+          <Reveal className="value-metric" delay={150}>
+            <strong>7<small>杯</small></strong><span>剛好一週</span>
+          </Reveal>
+          <Reveal className="value-metric" delay={220}>
+            <strong>23<small>元</small></strong><span>每杯約</span>
+          </Reveal>
+        </div>
+
+        <Reveal className="value-note" delay={280}>
+          <p><span>甜度退後</span><strong>食材風味向前</strong></p>
+          <small>以小包7入官方售價160元換算<br />實際售價依各通路活動為準</small>
+        </Reveal>
       </div>
     </section>
   );
@@ -166,7 +214,10 @@ function BrandProof() {
           <span className="proof-quality-mark"><ShieldCheck aria-hidden="true" /></span>
           <p className="proof-card__label">從第一批到每一批</p>
           <h3>品質不是選項<br />是唯一考量</h3>
-          <p>從原料挑選　製造　包裝到銷售<br />每一道都嚴格自主管理</p>
+          <p>商品送驗 SGS / FSI<br />從原料挑選到包裝　每一道都嚴格管理</p>
+          <div className="proof-quality-facts">
+            <span>真材實料</span><span>薑茶零添加香精香料</span>
+          </div>
           <span className="proof-quality-line"><i /><i /><i /><i /></span>
         </Reveal>
       </div>
@@ -272,8 +323,8 @@ function Flavors() {
   return (
     <section className="section flavors" id="flavors">
       <Reveal className="section-heading section-heading--center">
-        <p className="eyebrow">不是混在一起　　是多種選擇</p>
-        <h2><span>每種風味</span><span>都有自己的主角</span></h2>
+        <p className="eyebrow">今天想喝什麼</p>
+        <h2><span>五種風味</span><span>五種不同日常</span></h2>
       </Reveal>
       <div className="flavor-layout">
         <FlavorStage flavor={flavor} />
@@ -281,6 +332,7 @@ function Flavors() {
           <p className="flavor-note">{flavor.note}</p>
           <h3>{flavor.name}</h3>
           <p>{flavor.description}</p>
+          <p className="flavor-moment">適合　{flavor.moment}</p>
           <div className="flavor-tags">{flavor.ingredients.map((item) => <span key={item}>{item}</span>)}</div>
         </div>
       </div>
@@ -602,7 +654,7 @@ function App() {
     if (!isAboutPage) document.title = '糖鼎 SUGAR DING｜台灣黑糖走進世界日常';
   }, [isAboutPage]);
   if (isAboutPage) return <AboutPage />;
-  return <><Hero /><main><Story /><BrandProof /><AboutTeaser /><Care /><Flavors /><WorldMap /></main><Closing /></>;
+  return <><Hero /><main><Story /><ValueStory /><BrandProof /><AboutTeaser /><Care /><Flavors /><WorldMap /></main><Closing /></>;
 }
 
 createRoot(document.getElementById('root')).render(<App />);

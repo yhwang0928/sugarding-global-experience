@@ -4,6 +4,7 @@ export const flavors = [
     name: '四合一黑糖薑茶',
     short: '薑茶',
     note: '暖　辛香',
+    moment: '天氣轉涼　想喝辛香暖飲',
     description: '黑糖醇厚  老薑辛香',
     ingredients: ['黑糖', '老薑', '紅棗', '桂圓'],
     particles: ['ginger', 'date', 'longan', 'crystal', 'ginger', 'date', 'crystal', 'longan'],
@@ -15,6 +16,7 @@ export const flavors = [
     name: '桂圓紅棗',
     short: '桂圓紅棗',
     note: '醇　果香',
+    moment: '早餐午後　想喝圓潤果香',
     description: '桂圓深甜  紅棗圓潤',
     ingredients: ['黑糖', '桂圓', '紅棗'],
     particles: ['longan', 'date', 'crystal', 'longan', 'date', 'crystal', 'longan', 'date'],
@@ -26,6 +28,7 @@ export const flavors = [
     name: '玫瑰四物',
     short: '玫瑰四物',
     note: '柔　花香',
+    moment: '留給自己　想喝柔和花香',
     description: '玫瑰柔香  四物溫潤',
     ingredients: ['黑糖', '玫瑰', '四物'],
     particles: ['rose', 'crystal', 'rose', 'herb', 'rose', 'crystal', 'herb', 'rose'],
@@ -37,6 +40,7 @@ export const flavors = [
     name: '黑糖烏龍',
     short: '黑糖烏龍',
     note: '清　茶韻',
+    moment: '搭配餐點　想喝清爽茶韻',
     description: '烏龍茶韻  黑糖回甘',
     ingredients: ['黑糖', '烏龍茶'],
     particles: ['tea', 'crystal', 'tea', 'tea', 'crystal', 'tea', 'crystal', 'tea'],
@@ -48,6 +52,7 @@ export const flavors = [
     name: '桂圓銀耳',
     short: '桂圓銀耳',
     note: '潤　清甜',
+    moment: '慢慢休息　想喝滑潤口感',
     description: '桂圓清甜  銀耳柔潤',
     ingredients: ['黑糖', '桂圓', '銀耳'],
     particles: ['tremella', 'longan', 'crystal', 'tremella', 'longan', 'crystal', 'tremella', 'longan'],
@@ -140,7 +145,7 @@ export const markets = [
 ];
 
 export const features = [
-  { title: '定量成磚', body: '每次剛好' },
-  { title: '熱水一沖', body: '香氣展開' },
-  { title: '多種口味', body: '各自完整' },
+  { title: '真材入磚', body: '食材看得見' },
+  { title: '輕甜配方', body: '原料喝得出來' },
+  { title: '一顆一杯', body: '日常剛剛好' },
 ];
