@@ -81,15 +81,40 @@ function Header() {
 }
 
 function CountryIcon({ id }) {
-  const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' };
+  const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' };
   return (
     <svg className="country-icon" viewBox="0 0 64 64" aria-hidden="true">
-      {id === 'taiwan' && <g {...common}><path d="M32 8v6M25 18h14M27 18l-3 31M37 18l3 31M24 27h16M23 35h18M22 43h20M28 14h8l2 4H26l2-4Z" /><path d="M19 49h26M27 49v7M37 49v7M22 56h20" /></g>}
-      {id === 'usa' && <g {...common}><path d="M31 9l3 8-3 4 4 4-2 7v22M26 54h14M27 48h12" /><path d="M30 9l-5 7 5 1M35 17l5-2M20 25l9-4M20 25l3 5M20 25l-3-5" /><path d="M25 34h12l4 14H22l3-14Z" /></g>}
-      {id === 'japan' && <g {...common}><circle cx="46" cy="18" r="8" /><path d="M8 48l16-23 9 13 6-8 17 18H8Z" /><path d="M17 36l7-11 5 8 4 5M8 48h48" /></g>}
-      {id === 'malaysia' && <g {...common}><path d="M18 11h9v44H14M37 11h9l4 44H34M17 22h11M16 31h12M15 40h13M36 22h11M35 31h13M35 40h14" /><path d="M22 11l10-5 10 5M27 16h10M24 55h18" /></g>}
-      {id === 'singapore' && <g {...common}><path d="M10 41h44M15 37h34l-3-16H18l-3 16Z" /><path d="M15 21h34M22 21V11h5v10M37 21V11h5v10M18 11h9M33 11h9" /><path d="M13 48c6-4 12 4 19 0s13 4 20 0" /></g>}
-      {id === 'hongkong' && <g {...common}><path d="M8 48h48M12 48V34h8v14M23 48V24h9v24M35 48V30h7v18M45 48V19h8v29" /><path d="M10 30l9-10 7 6 8-12 8 9 10-11" /><path d="M8 54c8-4 16 4 24 0s16 4 24 0" /></g>}
+      {id === 'taiwan' && <g {...common}>
+        <path d="M32 5v7M28 12h8l1.5 5h-11L28 12ZM25 17h14l-2 6H27l-2-6ZM27 23h10l2 6H25l2-6ZM25 29h14l-2 6H27l-2-6ZM27 35h10l2 6H25l2-6ZM25 41h14l-2 7H27l-2-7Z" />
+        <path d="M28 48h8v8M23 56h18" />
+      </g>}
+      {id === 'usa' && <g {...common}>
+        <path d="M24 55h23M27 50h17l2 5H25l2-5ZM29 39h13l2 11H27l2-11Z" />
+        <path d="M31 39l-2-11 4-4 5 3 2 12M33 24l-1-5M32 19a4 4 0 1 1 8 0c0 2-1.8 4-4 4" />
+        <path d="M37 27l5-8M42 19l2-7M44 12l3-3M44 12l4 1M44 12l-1-4M48 9l2 2M42 9l2-1" />
+        <path d="M32 19l-3-1M33 16l-2-3M37 15v-4M40 16l2-3" />
+      </g>}
+      {id === 'japan' && <g {...common}>
+        <circle cx="47" cy="17" r="7" />
+        <path d="M7 49l18-25 8 12 6-8 18 21H7Z" />
+        <path d="M17 36l8-12 5 8 3 4M10 49h44" />
+      </g>}
+      {id === 'malaysia' && <g {...common}>
+        <path d="M17 53h14M33 53h14M20 17h8v36H18l2-36ZM36 17h8l2 36H34l2-36Z" />
+        <path d="M22 17l2-8 2 8M38 17l2-8 2 8M21 26h8M20 34h10M19 42h12M35 26h10M35 34h10M34 42h12" />
+        <path d="M29 32h7v6h-7M24 9V5M40 9V5" />
+      </g>}
+      {id === 'singapore' && <g {...common}>
+        <path d="M14 49h36M17 45h8V25h-8v20ZM28 45h8V25h-8v20ZM39 45h8V25h-8v20Z" />
+        <path d="M12 21c8 2 18-3 27-1 5 1 9 0 13-3l-2 8H15l-3-4Z" />
+        <path d="M11 54c7-4 14 4 21 0s14 4 21 0" />
+      </g>}
+      {id === 'hongkong' && <g {...common}>
+        <path d="M31 11v36M31 15c-7 3-13 10-16 20h16V15ZM33 17c8 4 13 10 16 18H33V17Z" />
+        <path d="M12 40h40l-5 9H18l-6-9ZM23 49l4 5h14l4-5" />
+        <path d="M9 56c7-4 14 4 23 0s16 4 23 0" />
+        <path d="M41 13l4 4-4 4M48 10l5 5-5 5" />
+      </g>}
     </svg>
   );
 }
