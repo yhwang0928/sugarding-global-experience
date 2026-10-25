@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowDown, ArrowUpRight, Menu, Pause, Play, X } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, HandHeart, Heart, Menu, Pause, Play, X } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, Line, Marker, ZoomableGroup } from 'react-simple-maps';
 import worldData from 'world-atlas/countries-110m.json';
 import { features, flavors, markets } from './data';
@@ -72,6 +72,7 @@ function Header() {
       </button>
       <nav className={cx('site-nav', open && 'is-open')} aria-label="主要選單">
         <a href="#story" onClick={close}>品牌特色</a>
+        <a href="#care" onClick={close}>照顧與公益</a>
         <a href="#flavors" onClick={close}>多重風味</a>
         <a href="#world" onClick={close}>全球通路</a>
         <a href="https://www.gingertw.com/" target="_blank" rel="noreferrer" onClick={close}>前往官網 <ArrowUpRight size={16} /></a>
@@ -124,6 +125,47 @@ function Story() {
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+function Care() {
+  return (
+    <section className="section care" id="care">
+      <Reveal className="section-heading care-heading">
+        <p className="eyebrow">Care becomes care</p>
+        <h2><span>先把自己照顧好</span><span>再把溫暖留給更多人</span></h2>
+        <p>照顧不是停在自己身上<br />當心裡有了餘裕　善意就能繼續往外走</p>
+      </Reveal>
+
+      <div className="care-journey" aria-label="從自我照顧延伸到公益關懷">
+        <Reveal className="care-card care-card--self">
+          <span className="care-card__icon"><Heart aria-hidden="true" /></span>
+          <p>給自己</p>
+          <h3>一杯溫熱<br />留一點時間給自己</h3>
+          <small>照顧身體　也照顧日常</small>
+        </Reveal>
+
+        <div className="care-current" aria-hidden="true">
+          <span className="care-current__line" />
+          <i className="care-current__drop" />
+          <i className="care-current__ring care-current__ring--one" />
+          <i className="care-current__ring care-current__ring--two" />
+        </div>
+
+        <Reveal className="care-card care-card--others" delay={180}>
+          <span className="care-card__icon"><HandHeart aria-hidden="true" /></span>
+          <p>給別人</p>
+          <h3>把日常的餘裕<br />化成對社會的關心</h3>
+          <small>關懷他人　連結更多善意</small>
+        </Reveal>
+      </div>
+
+      <Reveal className="care-promise" delay={260}>
+        <span>公益行動</span>
+        <p>從一個人開始<br />讓照顧成為一群人的力量</p>
+        <small>合作內容與行動成果將持續公開</small>
+      </Reveal>
     </section>
   );
 }
@@ -360,7 +402,7 @@ function Closing() {
 }
 
 function App() {
-  return <><Hero /><main><Story /><Flavors /><WorldMap /></main><Closing /></>;
+  return <><Hero /><main><Story /><Care /><Flavors /><WorldMap /></main><Closing /></>;
 }
 
 createRoot(document.getElementById('root')).render(<App />);
