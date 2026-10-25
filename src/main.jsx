@@ -174,7 +174,7 @@ function FlavorStage({ flavor }) {
   return (
     <div className="flavor-stage" style={{ '--flavor': flavor.color }} key={flavor.id}>
       <div className="flavor-halo" />
-      <img className="flavor-image" src={flavor.image} alt={`${flavor.name}黑糖磚與原料`} loading="lazy" />
+      <img className="flavor-image" src="/assets/flavor-cube-only.webp" alt={`${flavor.name}黑糖磚`} loading="lazy" />
       <div className="ingredient-orbits" aria-hidden="true">
         {flavor.particles.map((particle, index) => (
           <span
@@ -286,7 +286,7 @@ function WorldMap() {
       <Reveal className="section-heading section-heading--world">
         <p className="eyebrow">Global presence</p>
         <h2><span>從台灣出發</span><span>走進六個市場</span></h2>
-        <p>點選國家　讓圖釘帶你抵達</p>
+        <p>讓好口味　在全世界都能品嚐</p>
       </Reveal>
       <div className="map-shell">
         <button className="motion-toggle" onClick={() => setPlaying(!playing)} aria-label={playing ? '暫停自動輪播' : '播放自動輪播'}>
@@ -304,7 +304,7 @@ function WorldMap() {
                         key={`depth-${geo.rsmKey}`}
                         geography={geo}
                         className="map-country-depth"
-                        style={{ fill: market ? '#613440' : '#6d776f', outline: 'none' }}
+                        style={{ fill: market ? '#5c2835' : '#76534b', outline: 'none' }}
                         tabIndex={-1}
                       />
                     );
