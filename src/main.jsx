@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowDown, ArrowUpRight, HandHeart, Heart, Menu, Pause, Play, X } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Award, HandHeart, Heart, Menu, Pause, Play, ShieldCheck, Sprout, Users, X } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, Line, Marker, ZoomableGroup } from 'react-simple-maps';
 import worldData from 'world-atlas/countries-110m.json';
 import { features, flavors, markets } from './data';
@@ -49,32 +49,35 @@ function Reveal({ children, className = '', delay = 0 }) {
   );
 }
 
-function BrandMark({ light = false }) {
+function BrandMark({ light = false, href = '#top' }) {
   return (
-    <a className={cx('brand-mark', light && 'brand-mark--light')} href="#top" aria-label="回到首頁">
+    <a className={cx('brand-mark', light && 'brand-mark--light')} href={href} aria-label="回到首頁">
       <strong>糖鼎</strong><span>SUGAR DING</span>
     </a>
   );
 }
 
-function Header() {
+function Header({ page = 'home', light = false }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     document.body.classList.toggle('menu-open', open);
     return () => document.body.classList.remove('menu-open');
   }, [open]);
   const close = () => setOpen(false);
+  const homeLink = page === 'about' ? '/' : '#top';
+  const sectionLink = (hash) => (page === 'about' ? `/${hash}` : hash);
   return (
-    <header className="site-header">
-      <BrandMark />
+    <header className={cx('site-header', light && 'site-header--light')}>
+      <BrandMark light={light} href={homeLink} />
       <button className="menu-toggle" onClick={() => setOpen(!open)} aria-label={open ? '關閉選單' : '開啟選單'} aria-expanded={open}>
         {open ? <X /> : <Menu />}
       </button>
       <nav className={cx('site-nav', open && 'is-open')} aria-label="主要選單">
-        <a href="#story" onClick={close}>品牌特色</a>
-        <a href="#care" onClick={close}>照顧與公益</a>
-        <a href="#flavors" onClick={close}>多重風味</a>
-        <a href="#world" onClick={close}>全球通路</a>
+        <a href="/about" onClick={close}>關於糖鼎</a>
+        <a href={sectionLink('#story')} onClick={close}>品牌特色</a>
+        <a href={sectionLink('#care')} onClick={close}>照顧與公益</a>
+        <a href={sectionLink('#flavors')} onClick={close}>多重風味</a>
+        <a href={sectionLink('#world')} onClick={close}>全球通路</a>
         <a href="https://www.gingertw.com/" target="_blank" rel="noreferrer" onClick={close}>前往官網 <ArrowUpRight size={16} /></a>
       </nav>
     </header>
@@ -125,6 +128,23 @@ function Story() {
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+function AboutTeaser() {
+  return (
+    <section className="section about-teaser" aria-labelledby="about-teaser-title">
+      <Reveal className="about-teaser__media">
+        <img src="/assets/about/about-founder.jpg" alt="台灣黑糖與原料" loading="lazy" />
+        <span>ABOUT<br />SUGAR DING</span>
+      </Reveal>
+      <Reveal className="about-teaser__copy" delay={120}>
+        <p className="eyebrow">關於糖鼎</p>
+        <h2 id="about-teaser-title"><span>從照顧最重要的人</span><span>開始一個品牌</span></h2>
+        <p>糖鼎誕生於一份陪伴家人的心意<br />從台灣甘蔗開始　把真材實料熬進每一塊黑糖</p>
+        <a className="round-link" href="/about">走進糖鼎的故事 <ArrowRight size={18} /></a>
+      </Reveal>
     </section>
   );
 }
@@ -379,21 +399,22 @@ function WorldMap() {
   );
 }
 
-function Closing() {
+function Closing({ about = false }) {
   return (
     <footer className="closing">
       <div className="closing-glow" />
       <Reveal>
         <p className="eyebrow">From Taiwan　With warmth</p>
-        <h2><span>下一杯</span><span>想在哪裡遇見糖鼎</span></h2>
-        <p>找商品　看靈感　一起走向更多地方</p>
+        <h2>{about ? <><span>故事從家人開始</span><span>溫暖繼續往世界走</span></> : <><span>下一杯</span><span>想在哪裡遇見糖鼎</span></>}</h2>
+        <p>{about ? '認識風味　尋找通路　讓照顧成為每一天的日常' : '找商品　看靈感　一起走向更多地方'}</p>
         <div className="closing-actions">
-          <a href="https://www.gingertw.com/" target="_blank" rel="noreferrer">前往官方網站 <ArrowUpRight size={18} /></a>
-          <a href="https://www.youtube.com/@%E7%B3%96%E9%BC%8E%E9%BB%91%E7%B3%96" target="_blank" rel="noreferrer">觀看 YouTube <ArrowUpRight size={18} /></a>
+          {about && <a href="/#flavors">認識糖鼎風味 <ArrowRight size={18} /></a>}
+          {!about && <a href="https://www.gingertw.com/" target="_blank" rel="noreferrer">前往官方網站 <ArrowUpRight size={18} /></a>}
+          <a href={about ? '/#world' : 'https://www.youtube.com/@%E7%B3%96%E9%BC%8E%E9%BB%91%E7%B3%96'} target={about ? undefined : '_blank'} rel={about ? undefined : 'noreferrer'}>{about ? '查看全球通路' : '觀看 YouTube'} {about ? <ArrowRight size={18} /> : <ArrowUpRight size={18} />}</a>
         </div>
       </Reveal>
       <div className="footer-bottom">
-        <BrandMark light />
+        <BrandMark light href="/" />
         <p>陪伴讓一切美好</p>
         <small>© {new Date().getFullYear()} SUGAR DING</small>
       </div>
@@ -401,8 +422,139 @@ function Closing() {
   );
 }
 
+function AboutPage() {
+  useEffect(() => {
+    document.title = '關於糖鼎｜糖鼎 SUGAR DING';
+  }, []);
+
+  return (
+    <div className="about-page">
+      <section className="about-hero" id="top">
+        <Header page="about" light />
+        <picture className="about-hero__image">
+          <source media="(max-width: 899px)" srcSet="/assets/about/about-hero-alt.jpg" />
+          <img src="/assets/about/about-hero.jpg" alt="糖鼎黑糖飲與黑糖磚" />
+        </picture>
+        <div className="about-hero__shade" />
+        <div className="about-hero__copy">
+          <p>ABOUT SUGAR DING</p>
+          <h1><span>關於糖鼎</span><span>一份想照顧家人的心</span></h1>
+        </div>
+        <a className="about-hero__back" href="/"><ArrowLeft size={18} /> 回到首頁</a>
+      </section>
+
+      <main>
+        <section className="section about-origin">
+          <Reveal className="about-origin__heading">
+            <p className="eyebrow">創業故事</p>
+            <h2><span>因為在乎</span><span>所以不願將就</span></h2>
+          </Reveal>
+          <Reveal className="about-origin__copy" delay={100}>
+            <p>看見重要的人每個月都承受身體不適<br />創辦人吳寰宇想找到一種溫柔而日常的陪伴</p>
+            <p>從老糖師口中認識台灣甘蔗<br />才發現一塊色澤琥珀　口感溫潤的黑糖<br />也能承載一份真實的照顧</p>
+          </Reveal>
+          <Reveal className="about-origin__image" delay={180}>
+            <img src="/assets/about/about-founder.jpg" alt="台灣黑糖塊與木碗" loading="lazy" />
+            <span>從台灣甘蔗開始</span>
+          </Reveal>
+        </section>
+
+        <section className="section about-belief">
+          <div className="about-belief__rings" aria-hidden="true" />
+          <Reveal className="about-belief__art">
+            <img src="/assets/about/about-sugar.png" alt="糖鼎黑糖" loading="lazy" />
+          </Reveal>
+          <Reveal className="about-belief__copy" delay={120}>
+            <p className="eyebrow">愛的濃縮</p>
+            <h2><span>單純</span><span>從來不簡單</span></h2>
+            <p>小小一塊黑糖磚<br />凝聚的是對家人的關心<br />也是糖鼎做每一項選擇的起點</p>
+          </Reveal>
+        </section>
+
+        <section className="section about-craft">
+          <Reveal className="about-craft__copy">
+            <p className="eyebrow">品牌初衷</p>
+            <h2><span>誠信做糖</span><span>回到食材原本的味道</span></h2>
+            <p>選用台灣栽種甘蔗<br />不靠香精與糖精調製風味</p>
+            <p>產品上市前經過團隊反覆試飲<br />唯有自己願意買　願意分享給家人<br />才值得交到顧客手上</p>
+          </Reveal>
+          <Reveal className="about-craft__image" delay={140}>
+            <img src="/assets/about/about-tasting.jpg" alt="糖鼎團隊進行產品試飲" loading="lazy" />
+          </Reveal>
+        </section>
+
+        <section className="section about-quality">
+          <Reveal className="section-heading about-quality__heading">
+            <p className="eyebrow">品質把關</p>
+            <h2><span>讓承諾</span><span>經得起檢驗</span></h2>
+          </Reveal>
+          <Reveal className="about-quality__award" delay={100}>
+            <img src="/assets/about/about-award.jpg" alt="Monde Selection 世界品質評鑑評審" loading="lazy" />
+            <div><Award aria-hidden="true" /><p>2019 Monde Selection</p><strong>最頂級金獎</strong></div>
+          </Reveal>
+          <div className="quality-promises" aria-label="糖鼎品質承諾">
+            {[
+              [ShieldCheck, '拒絕香精', '讓食材說話'],
+              [Sprout, '無添加糖精', '保留單純味道'],
+              [ShieldCheck, '農藥零檢出', '自主定期檢驗'],
+            ].map(([Icon, title, body], index) => (
+              <Reveal className="quality-promise" delay={160 + index * 80} key={title}>
+                <Icon aria-hidden="true" /><h3>{title}</h3><p>{body}</p>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <section className="section about-dream">
+          <Reveal className="section-heading about-dream__heading">
+            <p className="eyebrow">品牌夢想</p>
+            <h2><span>從照顧女性</span><span>走向對世界友善</span></h2>
+            <p>把自己顧好　同時也能照顧到其他人<br />這不只是一句話　而是糖鼎持續採取的行動</p>
+          </Reveal>
+          <div className="dream-grid">
+            {[
+              [Heart, '定期公益活動', '把溫暖送到需要陪伴的地方'],
+              [HandHeart, '持續志工服務', '讓每次參與累積成長久關係'],
+              [Users, '支持二度就業女性', '創造能重新出發的友善工作機會'],
+            ].map(([Icon, title, body], index) => (
+              <Reveal className="dream-card" delay={100 + index * 90} key={title}>
+                <span><Icon aria-hidden="true" /></span><h3>{title}</h3><p>{body}</p>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <section className="section about-impact">
+          <Reveal className="section-heading about-impact__heading">
+            <p className="eyebrow">小小力量 × 每一個人</p>
+            <h2><span>讓照顧</span><span>真正走進行動</span></h2>
+          </Reveal>
+          <div className="impact-list">
+            {[
+              ['2019', '育幼院關懷活動', '/assets/about/about-charity-2019.jpg'],
+              ['2021', '伊甸基金會參訪活動', '/assets/about/about-charity-2021.jpg'],
+              ['2022', '志工淨灘活動', '/assets/about/about-charity-2022.jpg'],
+            ].map(([year, title, image], index) => (
+              <Reveal className="impact-card" delay={index * 90} key={year}>
+                <div><img src={image} alt={title} loading="lazy" /></div>
+                <p>{year}</p><h3>{title}</h3>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      </main>
+      <Closing about />
+    </div>
+  );
+}
+
 function App() {
-  return <><Hero /><main><Story /><Care /><Flavors /><WorldMap /></main><Closing /></>;
+  const isAboutPage = window.location.pathname.replace(/\/+$/, '') === '/about';
+  useEffect(() => {
+    if (!isAboutPage) document.title = '糖鼎 SUGAR DING｜台灣黑糖走進世界日常';
+  }, [isAboutPage]);
+  if (isAboutPage) return <AboutPage />;
+  return <><Hero /><main><Story /><AboutTeaser /><Care /><Flavors /><WorldMap /></main><Closing /></>;
 }
 
 createRoot(document.getElementById('root')).render(<App />);
