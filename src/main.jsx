@@ -132,6 +132,59 @@ function Story() {
   );
 }
 
+function TaipeiTower({ half = false }) {
+  return (
+    <div className={cx('taipei-tower', half && 'taipei-tower--half')} aria-hidden="true">
+      <i className="taipei-tower__spire" />
+      <span /><span /><span /><span /><span /><span /><span /><span />
+      <b />
+    </div>
+  );
+}
+
+function BrandProof() {
+  return (
+    <section className="section brand-proof" aria-labelledby="brand-proof-title">
+      <Reveal className="section-heading brand-proof__heading">
+        <p className="eyebrow">The reasons to believe</p>
+        <h2 id="brand-proof-title"><span>不只好喝</span><span>還有被選擇的證明</span></h2>
+      </Reveal>
+
+      <div className="proof-grid">
+        <Reveal className="proof-card proof-card--volume">
+          <div className="proof-tower-scene">
+            <TaipeiTower />
+            <TaipeiTower half />
+          </div>
+          <p className="proof-card__label">每月出貨量</p>
+          <p className="proof-number"><strong>1.5</strong><span>座<br />台北 101</span></p>
+          <h3>一次次被選擇<br />就是市場給口味的回答</h3>
+          <small>依品牌每月出貨量換算</small>
+        </Reveal>
+
+        <Reveal className="proof-card proof-card--world" delay={110}>
+          <div className="proof-orbit" aria-hidden="true">
+            {markets.map((market, index) => <i key={market.id} style={{ '--market-index': index }} />)}
+            <b>6</b>
+          </div>
+          <p className="proof-card__label">六個市場　已經品嚐</p>
+          <h3>從台灣出發<br />讓好口味串連全世界</h3>
+          <div className="proof-markets">{markets.map((market) => <span key={market.id}>{market.name}</span>)}</div>
+          <a href="#world">看看糖鼎走到哪裡 <ArrowDown size={17} /></a>
+        </Reveal>
+
+        <Reveal className="proof-card proof-card--quality" delay={220}>
+          <span className="proof-quality-mark"><ShieldCheck aria-hidden="true" /></span>
+          <p className="proof-card__label">從第一批到每一批</p>
+          <h3>品質不是選項<br />是唯一考量</h3>
+          <p>從原料挑選　製造　包裝到銷售<br />每一道都嚴格自主管理</p>
+          <span className="proof-quality-line"><i /><i /><i /><i /></span>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function AboutTeaser() {
   return (
     <section className="section about-teaser" aria-labelledby="about-teaser-title">
@@ -554,7 +607,7 @@ function App() {
     if (!isAboutPage) document.title = '糖鼎 SUGAR DING｜台灣黑糖走進世界日常';
   }, [isAboutPage]);
   if (isAboutPage) return <AboutPage />;
-  return <><Hero /><main><Story /><AboutTeaser /><Care /><Flavors /><WorldMap /></main><Closing /></>;
+  return <><Hero /><main><Story /><BrandProof /><AboutTeaser /><Care /><Flavors /><WorldMap /></main><Closing /></>;
 }
 
 createRoot(document.getElementById('root')).render(<App />);
