@@ -179,11 +179,14 @@ function Flavors() {
           <button
             key={item.id}
             className={cx('flavor-option', item.id === active && 'is-active')}
+            style={{ '--option-color': item.color }}
             onClick={() => setActive(item.id)}
             role="tab"
             aria-selected={item.id === active}
           >
-            <span>{String(index + 1).padStart(2, '0')}</span>{item.short}
+            <span className="flavor-option__art"><img src={item.image} alt="" /></span>
+            <span className="flavor-option__copy"><small>風味 {String(index + 1).padStart(2, '0')}</small><strong>{item.short}</strong></span>
+            <i aria-hidden="true" />
           </button>
         ))}
       </div>
@@ -203,7 +206,7 @@ function MarketPanel({ market }) {
         <div className="channel-list">
           {market.channels.map((channel, index) => (
             <div className="channel-item" key={channel.name} style={{ '--item-delay': `${index * 38}ms` }}>
-              <span className="channel-logo"><img src={channel.logo} alt="" loading="lazy" /></span>
+              <span className={cx('channel-logo', channel.logoTheme === 'dark' && 'channel-logo--dark')}><img src={channel.logo} alt={`${channel.name} logo`} loading="lazy" /></span>
               <p>{channel.name}</p>
             </div>
           ))}
@@ -250,16 +253,34 @@ function WorldMap() {
         <div className="map-wrap" aria-label="糖鼎全球市場互動地圖">
           <ComposableMap projectionConfig={{ scale: 138 }} width={800} height={480}>
             <ZoomableGroup center={[10, 8]} zoom={1} minZoom={1} maxZoom={1}>
+              <g className="map-depth-layer" transform="translate(0 5)">
+                <Geographies geography={worldData}>
+                  {({ geographies }) => geographies.map((geo) => {
+                    const market = markets.find((item) => item.geoId === String(geo.id));
+                    return (
+                      <Geography
+                        key={`depth-${geo.rsmKey}`}
+                        geography={geo}
+                        className="map-country-depth"
+                        style={{ fill: market ? '#613440' : '#6d776f', outline: 'none' }}
+                        tabIndex={-1}
+                      />
+                    );
+                  })}
+                </Geographies>
+              </g>
               <Geographies geography={worldData}>
                 {({ geographies }) => geographies.map((geo) => {
                   const geoId = String(geo.id);
-                  const isMarket = markets.some((market) => market.geoId === geoId);
+                  const market = markets.find((item) => item.geoId === geoId);
+                  const isMarket = Boolean(market);
                   const isSelected = active.geoId === geoId;
                   return (
                     <Geography
                       key={geo.rsmKey}
                       geography={geo}
                       className={cx('map-country', isMarket && 'is-market', isSelected && 'is-selected')}
+                      style={{ fill: isSelected ? '#ffd16f' : (market?.mapColor || '#d8cdb8'), outline: 'none' }}
                       tabIndex={-1}
                     />
                   );
