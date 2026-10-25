@@ -20,5 +20,6 @@ npm run build
 - 口味資料：`src/data.js` 的 `flavors`
 - 全球市場與通路：`src/data.js` 的 `markets`
 - 動態與版面：`src/styles.css`
+- 品牌情境圖與口味爆炸圖：`public/assets`
 
 台灣通路資料整理自糖鼎官網；美國通路資料由品牌方提供。其他市場在確認通路名單前，以「通路資料整理中」顯示，避免使用未確認資訊。

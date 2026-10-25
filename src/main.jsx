@@ -80,14 +80,17 @@ function Header() {
   );
 }
 
-function SugarCube({ small = false }) {
+function CountryIcon({ id }) {
+  const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' };
   return (
-    <div className={cx('sugar-cube', small && 'sugar-cube--small')} aria-hidden="true">
-      <span className="cube-face cube-face--front" />
-      <span className="cube-face cube-face--top" />
-      <span className="cube-face cube-face--side" />
-      <i className="cube-glow" />
-    </div>
+    <svg className="country-icon" viewBox="0 0 64 64" aria-hidden="true">
+      {id === 'taiwan' && <g {...common}><path d="M32 8v6M25 18h14M27 18l-3 31M37 18l3 31M24 27h16M23 35h18M22 43h20M28 14h8l2 4H26l2-4Z" /><path d="M19 49h26M27 49v7M37 49v7M22 56h20" /></g>}
+      {id === 'usa' && <g {...common}><path d="M31 9l3 8-3 4 4 4-2 7v22M26 54h14M27 48h12" /><path d="M30 9l-5 7 5 1M35 17l5-2M20 25l9-4M20 25l3 5M20 25l-3-5" /><path d="M25 34h12l4 14H22l3-14Z" /></g>}
+      {id === 'japan' && <g {...common}><circle cx="46" cy="18" r="8" /><path d="M8 48l16-23 9 13 6-8 17 18H8Z" /><path d="M17 36l7-11 5 8 4 5M8 48h48" /></g>}
+      {id === 'malaysia' && <g {...common}><path d="M18 11h9v44H14M37 11h9l4 44H34M17 22h11M16 31h12M15 40h13M36 22h11M35 31h13M35 40h14" /><path d="M22 11l10-5 10 5M27 16h10M24 55h18" /></g>}
+      {id === 'singapore' && <g {...common}><path d="M10 41h44M15 37h34l-3-16H18l-3 16Z" /><path d="M15 21h34M22 21V11h5v10M37 21V11h5v10M18 11h9M33 11h9" /><path d="M13 48c6-4 12 4 19 0s13 4 20 0" /></g>}
+      {id === 'hongkong' && <g {...common}><path d="M8 48h48M12 48V34h8v14M23 48V24h9v24M35 48V30h7v18M45 48V19h8v29" /><path d="M10 30l9-10 7 6 8-12 8 9 10-11" /><path d="M8 54c8-4 16 4 24 0s16 4 24 0" /></g>}
+    </svg>
   );
 }
 
@@ -98,18 +101,15 @@ function Hero() {
       <div className="steam steam--one" aria-hidden="true" />
       <div className="steam steam--two" aria-hidden="true" />
       <div className="hero-copy">
-        <p className="eyebrow hero-eyebrow">一塊黑糖 · 一段陪伴</p>
-        <h1><span>把台灣的熬煮，</span><span>放進世界的日常。</span></h1>
-        <p className="hero-lead">糖鼎把時間熬進一塊黑糖磚。多重風味各自完整，一沖即飲，也把熟悉的溫暖帶往六個市場。</p>
-        <a className="text-link" href="#flavors">探索風味 <ArrowDown size={17} /></a>
+        <p className="eyebrow hero-eyebrow">一塊黑糖　　一段陪伴</p>
+        <h1><span>把台灣的熬煮</span><span>帶進世界日常</span></h1>
+        <p className="hero-lead"><span>一沖即飲</span><span>多種風味　各自完整</span></p>
+        <a className="text-link" href="#flavors">看看口味 <ArrowDown size={17} /></a>
       </div>
-      <div className="hero-object" aria-label="黑糖磚動態示意">
-        <div className="orbit orbit--a" />
-        <div className="orbit orbit--b" />
-        <SugarCube />
-        <span className="ingredient ingredient--ginger">薑</span>
-        <span className="ingredient ingredient--date">棗</span>
-        <span className="ingredient ingredient--tea">茶</span>
+      <div className="hero-media" aria-label="糖鼎黑糖飲與原料情境圖">
+        <img src="/assets/hero-tea-ritual.webp" alt="熱黑糖飲 黑糖磚 老薑與紅棗" />
+        <span className="hero-media-ring hero-media-ring--one" />
+        <span className="hero-media-ring hero-media-ring--two" />
       </div>
       <div className="hero-index" aria-hidden="true"><span>01</span><i /><span>世界裡的一杯糖鼎</span></div>
     </section>
@@ -119,19 +119,24 @@ function Hero() {
 function Story() {
   return (
     <section className="section story" id="story">
-      <Reveal className="section-heading">
-        <p className="eyebrow">產品特色</p>
-        <h2>把複雜的熬煮，<br />收進簡單的一杯。</h2>
-        <p>真正的便利，不該犧牲風味。糖鼎把比例、火候與時間先做好，讓每一次沖泡都穩定，也保留各種原料應有的個性。</p>
+      <Reveal className="story-visual">
+        <img src="/assets/flavor-story.webp" alt="糖鼎五種風味原料與黑糖磚" loading="lazy" />
+        <span>五種風味　各自完整</span>
       </Reveal>
-      <div className="feature-list">
-        {features.map((feature, index) => (
-          <Reveal key={feature.title} className="feature-row" delay={index * 100}>
-            <span className="feature-number">0{index + 1}</span>
-            <div><h3>{feature.title}</h3><p>{feature.body}</p></div>
-            <i className="feature-line" />
-          </Reveal>
-        ))}
+      <div className="story-content">
+        <Reveal className="section-heading">
+          <p className="eyebrow">產品特色</p>
+          <h2><span>時間熬好</span><span>日常就簡單</span></h2>
+        </Reveal>
+        <div className="feature-list">
+          {features.map((feature, index) => (
+            <Reveal key={feature.title} className="feature-row" delay={index * 100}>
+              <span className="feature-number">0{index + 1}</span>
+              <div><h3>{feature.title}</h3><p>{feature.body}</p></div>
+              <i className="feature-line" />
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -141,10 +146,7 @@ function FlavorStage({ flavor }) {
   return (
     <div className="flavor-stage" style={{ '--flavor': flavor.color }} key={flavor.id}>
       <div className="flavor-halo" />
-      <div className="flavor-cube"><SugarCube small /></div>
-      {flavor.ingredients.map((item, index) => (
-        <span className={`flavor-ingredient flavor-ingredient--${index + 1}`} key={item}>{item}</span>
-      ))}
+      <img className="flavor-image" src={flavor.image} alt={`${flavor.name}黑糖磚與原料`} loading="lazy" />
       <span className="flavor-spark flavor-spark--1" />
       <span className="flavor-spark flavor-spark--2" />
       <span className="flavor-spark flavor-spark--3" />
@@ -155,11 +157,17 @@ function FlavorStage({ flavor }) {
 function Flavors() {
   const [active, setActive] = useState(flavors[0].id);
   const flavor = flavors.find((item) => item.id === active);
+  useEffect(() => {
+    flavors.forEach((item) => {
+      const image = new Image();
+      image.src = item.image;
+    });
+  }, []);
   return (
     <section className="section flavors" id="flavors">
       <Reveal className="section-heading section-heading--center">
-        <p className="eyebrow">不是多合一，是多種選擇</p>
-        <h2>每個口味，<br />都有自己的主角。</h2>
+        <p className="eyebrow">不是混在一起　　是多種選擇</p>
+        <h2><span>每種風味</span><span>都有自己的主角</span></h2>
       </Reveal>
       <div className="flavor-layout">
         <FlavorStage flavor={flavor} />
@@ -167,6 +175,7 @@ function Flavors() {
           <p className="flavor-note">{flavor.note}</p>
           <h3>{flavor.name}</h3>
           <p>{flavor.description}</p>
+          <div className="flavor-tags">{flavor.ingredients.map((item) => <span key={item}>{item}</span>)}</div>
         </div>
       </div>
       <div className="flavor-picker" role="tablist" aria-label="選擇口味">
@@ -205,7 +214,7 @@ function MarketPanel({ market }) {
       ) : (
         <div className="channel-empty">
           <span className="empty-pulse" />
-          <p>糖鼎已走進{market.name}。<br />完整通路名單整理中，敬請期待。</p>
+          <p>糖鼎已走進{market.name}<br />通路名單整理中</p>
         </div>
       )}
     </div>
@@ -234,8 +243,8 @@ function WorldMap() {
     <section className="section world" id="world">
       <Reveal className="section-heading section-heading--world">
         <p className="eyebrow">Global presence</p>
-        <h2>糖鼎，正在世界各地被看見。</h2>
-        <p>點選下方國家，對應圖釘會放大；跟著從台灣出發的琥珀光線，找到離你最近的糖鼎。</p>
+        <h2><span>從台灣出發</span><span>走進六個市場</span></h2>
+        <p>點選國家　讓圖釘帶你抵達</p>
       </Reveal>
       <div className="map-shell">
         <button className="motion-toggle" onClick={() => setPlaying(!playing)} aria-label={playing ? '暫停自動輪播' : '播放自動輪播'}>
@@ -290,7 +299,7 @@ function WorldMap() {
               role="tab"
               aria-selected={activeId === market.id}
             >
-              <span>{market.symbol}</span><small>{market.name}</small>
+              <span><CountryIcon id={market.id} /></span><small>{market.name}</small>
             </button>
           ))}
         </div>
@@ -305,9 +314,9 @@ function Closing() {
     <footer className="closing">
       <div className="closing-glow" />
       <Reveal>
-        <p className="eyebrow">From Taiwan, with warmth.</p>
-        <h2>下一杯，<br />想在哪裡遇見糖鼎？</h2>
-        <p>尋找商品、觀看沖泡靈感，或與糖鼎一起把台灣的味道帶到更多地方。</p>
+        <p className="eyebrow">From Taiwan　With warmth</p>
+        <h2><span>下一杯</span><span>想在哪裡遇見糖鼎</span></h2>
+        <p>找商品　看靈感　一起走向更多地方</p>
         <div className="closing-actions">
           <a href="https://www.gingertw.com/" target="_blank" rel="noreferrer">前往官方網站 <ArrowUpRight size={18} /></a>
           <a href="https://www.youtube.com/@%E7%B3%96%E9%BC%8E%E9%BB%91%E7%B3%96" target="_blank" rel="noreferrer">觀看 YouTube <ArrowUpRight size={18} /></a>
