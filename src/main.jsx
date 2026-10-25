@@ -132,16 +132,6 @@ function Story() {
   );
 }
 
-function TaipeiTower({ half = false }) {
-  return (
-    <div className={cx('taipei-tower', half && 'taipei-tower--half')} aria-hidden="true">
-      <i className="taipei-tower__spire" />
-      <span /><span /><span /><span /><span /><span /><span /><span />
-      <b />
-    </div>
-  );
-}
-
 function BrandProof() {
   return (
     <section className="section brand-proof" aria-labelledby="brand-proof-title">
@@ -152,9 +142,8 @@ function BrandProof() {
 
       <div className="proof-grid">
         <Reveal className="proof-card proof-card--volume">
-          <div className="proof-tower-scene">
-            <TaipeiTower />
-            <TaipeiTower half />
+          <div className="proof-101-photo" aria-hidden="true">
+            <img src="/assets/taipei-101-photo.jpg" alt="" loading="lazy" />
           </div>
           <p className="proof-card__label">每月出貨量</p>
           <p className="proof-number"><strong>1.5</strong><span>座<br />台北 101</span></p>
@@ -213,10 +202,13 @@ function Care() {
 
       <div className="care-journey" aria-label="從自我照顧延伸到公益關懷">
         <Reveal className="care-card care-card--self">
-          <span className="care-card__icon"><Heart aria-hidden="true" /></span>
-          <p>給自己</p>
-          <h3>一杯溫熱<br />留一點時間給自己</h3>
-          <small>照顧身體　也照顧日常</small>
+          <div className="care-card__media"><img src="/assets/hero-tea-ritual.webp" alt="為自己沖一杯溫熱黑糖飲" loading="lazy" /></div>
+          <div className="care-card__body">
+            <span className="care-card__icon"><Heart aria-hidden="true" /></span>
+            <p>給自己</p>
+            <h3>一杯溫熱<br />留一點時間給自己</h3>
+            <small>照顧身體　也照顧日常</small>
+          </div>
         </Reveal>
 
         <div className="care-current" aria-hidden="true">
@@ -227,10 +219,13 @@ function Care() {
         </div>
 
         <Reveal className="care-card care-card--others" delay={180}>
-          <span className="care-card__icon"><HandHeart aria-hidden="true" /></span>
-          <p>給別人</p>
-          <h3>把日常的餘裕<br />化成對社會的關心</h3>
-          <small>關懷他人　連結更多善意</small>
+          <div className="care-card__media"><img src="/assets/about/about-charity-2019.jpg" alt="糖鼎參與育幼院關懷活動" loading="lazy" /></div>
+          <div className="care-card__body">
+            <span className="care-card__icon"><HandHeart aria-hidden="true" /></span>
+            <p>給別人</p>
+            <h3>把日常的餘裕<br />化成對社會的關心</h3>
+            <small>實際參與公益　讓善意走進更多日常</small>
+          </div>
         </Reveal>
       </div>
 
