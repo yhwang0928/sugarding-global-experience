@@ -5,7 +5,7 @@ export const flavors = [
     short: '薑茶',
     note: '暖　辛香',
     moment: '天氣轉涼　想喝辛香暖飲',
-    sceneLabel: '回家後',
+    sceneLabel: '另一半',
     sceneFor: '給剛回家的另一半',
     sceneTitle: ['你回來了', '先喝一杯再說'],
     sceneBody: '忙了一整天　不用急著問發生什麼事\n先把一杯暖心放到對方手裡',
@@ -97,9 +97,6 @@ export const flavors = [
 ];
 
 export const moments = [
-  flavors[0],
-  flavors[1],
-  flavors[2],
   {
     id: 'period-care',
     sceneLabel: '月事來時',
@@ -110,6 +107,9 @@ export const moments = [
     sceneAlt: '月事來時　在家抱著暖墊喝一杯溫熱飲品',
   },
   flavors[3],
+  flavors[0],
+  flavors[1],
+  flavors[2],
   flavors[4],
 ];
 
