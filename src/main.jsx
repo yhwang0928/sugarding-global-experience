@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Award, ChevronLeft, ChevronRight, HandHeart, Heart, MapPin, Menu, ShieldCheck, Sprout, Users, X } from 'lucide-react';
-import { features, flavors, markets } from './data';
+import { features, flavors, markets, moments } from './data';
 import './styles.css';
 
 const cx = (...classes) => classes.filter(Boolean).join(' ');
@@ -184,14 +184,11 @@ function ValueStory() {
           <Reveal className="value-metric" delay={150}>
             <strong>7<small>杯</small></strong><span>剛好一週</span>
           </Reveal>
-          <Reveal className="value-metric" delay={220}>
-            <strong>23<small>元</small></strong><span>每杯約</span>
-          </Reveal>
         </div>
 
         <Reveal className="value-note" delay={280}>
           <p><span>甜度退後</span><strong>食材風味向前</strong></p>
-          <small>以小包7入官方售價160元換算<br />實際售價依各通路活動為準</small>
+          <small>一顆一杯　不用秤量　也不用猜比例</small>
         </Reveal>
       </div>
 
@@ -398,14 +395,14 @@ function FlavorStage({ flavor }) {
   );
 }
 
-function useFlavorCarousel() {
-  const [active, setActive] = useState(flavors[0].id);
+function useFlavorCarousel(items = flavors) {
+  const [active, setActive] = useState(items[0].id);
   const swipeStart = useRef({ x: 0, y: 0 });
-  const flavor = flavors.find((item) => item.id === active);
-  const activeIndex = flavors.findIndex((item) => item.id === active);
+  const flavor = items.find((item) => item.id === active);
+  const activeIndex = items.findIndex((item) => item.id === active);
   const goToFlavor = (direction) => {
-    const nextIndex = (activeIndex + direction + flavors.length) % flavors.length;
-    setActive(flavors[nextIndex].id);
+    const nextIndex = (activeIndex + direction + items.length) % items.length;
+    setActive(items[nextIndex].id);
   };
   const handleTouchStart = (event) => {
     const touch = event.changedTouches[0];
@@ -421,7 +418,13 @@ function useFlavorCarousel() {
 }
 
 function Moments() {
-  const { active, setActive, flavor, activeIndex, goToFlavor, handleTouchStart, handleTouchEnd } = useFlavorCarousel();
+  const { active, setActive, flavor, activeIndex, goToFlavor, handleTouchStart, handleTouchEnd } = useFlavorCarousel(moments);
+  useEffect(() => {
+    moments.forEach((item) => {
+      const image = new Image();
+      image.src = item.sceneImage;
+    });
+  }, []);
   return (
     <section className="section flavors moments" id="moments">
       <Reveal className="section-heading section-heading--center moments-heading">
@@ -433,7 +436,7 @@ function Moments() {
       <div className="moment-swipe-controls" aria-label="切換飲用情境">
         <button onClick={() => goToFlavor(-1)} aria-label="上一個情境"><ChevronLeft /></button>
         <div>
-          <small>{String(activeIndex + 1).padStart(2, '0')} / {String(flavors.length).padStart(2, '0')}</small>
+          <small>{String(activeIndex + 1).padStart(2, '0')} / {String(moments.length).padStart(2, '0')}</small>
           <strong>{flavor.sceneLabel}</strong>
           <span>左右滑動　切換情境場域</span>
         </div>
@@ -453,7 +456,7 @@ function Moments() {
       </div>
 
       <div className="moment-scene-tabs" role="tablist" aria-label="選擇飲用情境">
-        {flavors.map((item) => (
+        {moments.map((item) => (
           <button key={item.id} className={cx(item.id === active && 'is-active')} onClick={() => setActive(item.id)} role="tab" aria-selected={item.id === active}>
             <span>{item.sceneLabel}</span>
             <small>{item.sceneFor.replace(/^給/, '')}</small>

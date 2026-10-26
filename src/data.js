@@ -96,6 +96,23 @@ export const flavors = [
   },
 ];
 
+export const moments = [
+  flavors[0],
+  flavors[1],
+  flavors[2],
+  {
+    id: 'period-care',
+    sceneLabel: '月事來時',
+    sceneFor: '給需要慢一點的自己',
+    sceneTitle: ['不必勉強撐著', '先讓身體暖下來'],
+    sceneBody: '月事來的這幾天　把步調放慢一點\n一杯溫熱　陪自己安靜休息',
+    sceneImage: '/assets/scenes/period-care.webp',
+    sceneAlt: '月事來時　在家抱著暖墊喝一杯溫熱飲品',
+  },
+  flavors[3],
+  flavors[4],
+];
+
 export const markets = [
   {
     id: 'taiwan',

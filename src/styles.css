@@ -423,7 +423,7 @@ p, h1, h2, h3 { margin-top: 0; }
   display: grid;
   margin-top: 38px;
   padding: 25px 0;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   border-top: 1px solid rgba(97,23,34,.2);
   border-bottom: 1px solid rgba(97,23,34,.2);
 }
