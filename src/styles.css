@@ -618,7 +618,7 @@ p, h1, h2, h3 { margin-top: 0; }
 .flavor-option.is-active > i { opacity: 1; transform: scaleY(1); box-shadow: 0 0 14px var(--option-color); }
 
 .moments-heading > p:last-child { color: rgba(255,248,239,.7); }
-.moment-layout { display: grid; max-width: 1180px; margin: 42px auto 0; gap: 16px; animation: moment-enter .7s cubic-bezier(.16,1,.3,1) both; }
+.moment-layout { display: grid; max-width: 1180px; margin: 22px auto 0; gap: 16px; animation: moment-enter .7s cubic-bezier(.16,1,.3,1) both; }
 .moment-scene {
   position: relative;
   width: 100%;
@@ -647,6 +647,30 @@ p, h1, h2, h3 { margin-top: 0; }
   letter-spacing: .1em;
   backdrop-filter: blur(12px);
 }
+.moment-scene-flavor {
+  position: absolute;
+  z-index: 3;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  display: grid;
+  min-height: 102px;
+  padding: 10px 13px 10px 10px;
+  grid-template-columns: 82px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  color: var(--wine-dark);
+  border: 1px solid rgba(255,255,255,.5);
+  border-radius: 25px;
+  background: rgba(255,247,235,.91);
+  box-shadow: 0 18px 36px rgba(32,3,10,.3);
+  backdrop-filter: blur(16px);
+}
+.moment-scene-flavor > img { width: 82px; height: 82px; object-fit: contain; border-radius: 20px; background: var(--wine-dark); animation: moment-flavor-bloom .72s cubic-bezier(.16,1,.3,1) both; }
+.moment-scene-flavor > div { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
+.moment-scene-flavor small { color: #9c663a; font-family: var(--utility); font-size: 12px; letter-spacing: .1em; }
+.moment-scene-flavor strong { color: var(--wine); font-family: var(--serif); font-size: 20px; font-weight: 600; line-height: 1.35; }
+.moment-scene-flavor p { margin: 0; color: #79635a; font-size: 12px; line-height: 1.45; }
 .moment-story {
   position: relative;
   padding: 36px 26px 38px;
@@ -661,13 +685,16 @@ p, h1, h2, h3 { margin-top: 0; }
 .moment-story h3 { position: relative; z-index: 1; margin-bottom: 22px; color: var(--wine); font-family: var(--serif); font-size: clamp(33px, 9.4vw, 50px); font-weight: 500; letter-spacing: -.035em; line-height: 1.45; }
 .moment-story h3 span { display: block; }
 .moment-body { position: relative; z-index: 1; margin: 0; color: #725e55; font-size: 17px; line-height: 1.9; }
-.moment-flavor-name { position: relative; z-index: 1; display: flex; margin-top: 28px; padding-top: 22px; align-items: center; gap: 14px; border-top: 1px solid rgba(97,23,34,.16); }
-.moment-flavor-name > img { width: 66px; height: 66px; object-fit: contain; border-radius: 50%; background: var(--wine-dark); box-shadow: 0 10px 24px rgba(97,23,34,.18); }
-.moment-flavor-name > div { display: flex; min-width: 0; flex-direction: column; gap: 5px; }
+.moment-flavor-name { position: relative; z-index: 1; display: none; margin-top: 25px; padding-top: 20px; grid-template-columns: 104px minmax(0, 1fr); align-items: center; gap: 16px; border-top: 1px solid rgba(97,23,34,.16); }
+.moment-flavor-name > img { width: 104px; height: 104px; object-fit: contain; border-radius: 28px; background: radial-gradient(circle at 38% 30%, #7d2836, var(--wine-dark)); box-shadow: 0 13px 28px rgba(97,23,34,.22); animation: moment-flavor-bloom .72s cubic-bezier(.16,1,.3,1) both; }
+.moment-flavor-name > .moment-flavor-copy { display: flex; min-width: 0; flex-direction: column; gap: 5px; }
 .moment-flavor-name small { color: #9c663a; font-size: 14px; letter-spacing: .12em; }
 .moment-flavor-name strong { color: var(--wine); font-family: var(--serif); font-size: 23px; font-weight: 600; }
+.moment-flavor-tags { display: flex; margin-top: 7px; gap: 5px; flex-wrap: wrap; }
+.moment-flavor-tags span { padding: 5px 9px; color: #7e4a2e; border: 1px solid rgba(126,74,46,.23); border-radius: 999px; background: rgba(255,255,255,.34); font-size: 13px; line-height: 1.25; }
 .moment-ingredients {
   position: relative;
+  display: none;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 28px 8px 28px 28px;
@@ -680,7 +707,7 @@ p, h1, h2, h3 { margin-top: 0; }
 .moment-ingredients .flavor-copy > p { margin-inline: auto; font-size: 17px; }
 .moment-ingredients .flavor-tags { margin-top: 14px; justify-content: center; }
 .moment-layout { touch-action: pan-y; }
-.moment-swipe-controls { display: grid; margin: 34px auto 14px; grid-template-columns: 48px 1fr 48px; align-items: center; gap: 12px; }
+.moment-swipe-controls { display: grid; margin: 34px auto 8px; grid-template-columns: 48px 1fr 48px; align-items: center; gap: 12px; }
 .moment-swipe-controls > button { display: grid; width: 48px; height: 48px; padding: 0; place-items: center; color: #fff8ed; border: 1px solid rgba(255,255,255,.24); border-radius: 50%; background: rgba(255,255,255,.055); }
 .moment-swipe-controls > button svg { width: 22px; height: 22px; }
 .moment-swipe-controls > div { display: grid; min-width: 0; grid-template-columns: auto 1fr; align-items: baseline; column-gap: 10px; text-align: center; }
@@ -689,6 +716,35 @@ p, h1, h2, h3 { margin-top: 0; }
 .moment-swipe-controls span { margin-top: 3px; color: rgba(255,248,239,.58); font-size: 13px; grid-column: 1 / -1; }
 .moment-picker { display: none; margin-top: 32px; }
 .moment-picker .flavor-option__copy small { color: var(--amber-light); font-family: var(--utility); }
+
+@keyframes moment-flavor-bloom {
+  from { opacity: 0; transform: scale(.72) rotate(-4deg); filter: blur(7px); }
+  to { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
+}
+
+@media (max-width: 599px) {
+  .moment-scene > span { top: 18px; bottom: auto; }
+  .moment-story { padding: 30px 24px 32px; }
+  .moment-for { margin-bottom: 13px; }
+  .moment-story h3 { margin-bottom: 14px; font-size: clamp(31px, 9vw, 38px); line-height: 1.38; }
+  .moment-body { font-size: 16px; line-height: 1.75; }
+}
+
+@media (min-width: 600px) and (max-width: 999px) {
+  .moment-layout { grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); align-items: stretch; }
+  .moment-scene { min-height: 0; }
+  .moment-scene-flavor { display: none; }
+  .moment-story { display: flex; padding: 28px 25px; flex-direction: column; justify-content: center; }
+  .moment-for { margin-bottom: 12px; }
+  .moment-story h3 { margin-bottom: 13px; font-size: clamp(28px, 4.7vw, 39px); line-height: 1.35; }
+  .moment-body { font-size: 15px; line-height: 1.65; }
+  .moment-flavor-name { display: grid; margin-top: 16px; padding-top: 15px; grid-template-columns: 88px minmax(0, 1fr); gap: 12px; }
+  .moment-flavor-name > img { width: 88px; height: 88px; border-radius: 23px; }
+  .moment-flavor-name small { font-size: 12px; }
+  .moment-flavor-name strong { font-size: 21px; }
+  .moment-flavor-tags { margin-top: 5px; }
+  .moment-flavor-tags span { padding: 4px 7px; font-size: 11px; }
+}
 
 .world { padding-inline: 0; overflow: hidden; background: linear-gradient(180deg, #f8efe1, #e7d3b8); }
 .section-heading--world { padding-inline: 22px; }
@@ -1051,6 +1107,8 @@ body.market-modal-open { overflow: hidden; }
   .moment-story { padding: 44px 42px; }
   .moment-story h3 { font-size: clamp(38px, 4vw, 54px); }
   .moment-body { font-size: 18px; }
+  .moment-scene-flavor { display: none; }
+  .moment-flavor-name { display: grid; }
   .moment-ingredients { display: grid; min-height: 344px; grid-template-columns: 1.08fr .92fr; align-items: center; }
   .moment-ingredients .flavor-stage { height: 340px; }
   .moment-ingredients .flavor-copy { padding: 20px 28px 20px 0; text-align: left; }

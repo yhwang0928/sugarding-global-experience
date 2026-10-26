@@ -342,8 +342,8 @@ function Flavors() {
         <button onClick={() => goToFlavor(-1)} aria-label="上一個情境"><ChevronLeft /></button>
         <div>
           <small>{String(activeIndex + 1).padStart(2, '0')} / {String(flavors.length).padStart(2, '0')}</small>
-          <strong>{flavor.sceneLabel}</strong>
-          <span>左右滑動切換情境</span>
+          <strong>{flavor.sceneLabel} · {flavor.short}</strong>
+          <span>左右滑動　場景與口味同步切換</span>
         </div>
         <button onClick={() => goToFlavor(1)} aria-label="下一個情境"><ChevronRight /></button>
       </div>
@@ -352,6 +352,14 @@ function Flavors() {
         <div className="moment-scene">
           <img src={flavor.sceneImage} alt={flavor.sceneAlt} />
           <span>{flavor.sceneLabel}</span>
+          <div className="moment-scene-flavor">
+            <img src={flavor.image} alt={`${flavor.name}原料與黑糖磚`} />
+            <div>
+              <small>此刻適合</small>
+              <strong>{flavor.name}</strong>
+              <p>{flavor.ingredients.join('・')}</p>
+            </div>
+          </div>
         </div>
 
         <div className="moment-story">
@@ -359,8 +367,14 @@ function Flavors() {
           <h3>{flavor.sceneTitle.map((line) => <span key={line}>{line}</span>)}</h3>
           <p className="moment-body">{flavor.sceneBody.split('\n').map((line) => <React.Fragment key={line}>{line}<br /></React.Fragment>)}</p>
           <div className="moment-flavor-name">
-            <img src={flavor.image} alt="" />
-            <div><small>{flavor.note}</small><strong>{flavor.name}</strong></div>
+            <img src={flavor.image} alt={`${flavor.name}原料與黑糖磚`} />
+            <div className="moment-flavor-copy">
+              <small>這一杯　{flavor.note}</small>
+              <strong>{flavor.name}</strong>
+              <div className="moment-flavor-tags" aria-label={`${flavor.name}主要原料`}>
+                {flavor.ingredients.map((item) => <span key={item}>{item}</span>)}
+              </div>
+            </div>
           </div>
         </div>
 
