@@ -877,19 +877,17 @@ p, h1, h2, h3 { margin-top: 0; }
 .market-stat strong { font-family: var(--serif); font-size: clamp(31px, 9vw, 45px); font-weight: 500; letter-spacing: -.04em; line-height: 1; }
 .market-stat span { margin-top: 10px; color: rgba(255,248,237,.72); font-size: 14px; line-height: 1.45; }
 .market-stats .market-stat:only-child { grid-column: 1 / -1; }
-.channel-board { position: relative; margin: 0 0 24px; padding: 11px; overflow: hidden; border: 1px solid rgba(97,23,34,.12); border-radius: 24px 24px 7px 24px; background: #fff; box-shadow: 0 18px 42px rgba(78,43,32,.11); }
-.channel-board img { display: block; width: 100%; height: auto; border-radius: 15px 15px 4px 15px; }
-.channel-board figcaption { padding: 13px 5px 3px; color: #80675d; font-size: 14px; letter-spacing: .08em; }
-.channel-highlights { display: flex; margin: -5px 0 27px; gap: 8px; flex-wrap: wrap; }
-.channel-highlights span { padding: 8px 11px; color: #713f2c; border: 1px solid rgba(112,62,44,.15); border-radius: 100px; background: rgba(255,255,255,.42); font-size: 13px; font-weight: 600; }
 .channel-list-title { margin: 31px 0 10px; color: var(--wine); font-family: var(--serif); font-size: 24px; font-weight: 500; }
 .channel-list { display: grid; grid-template-columns: 1fr; }
 .channel-item { display: grid; min-height: 82px; padding: 13px 0; grid-template-columns: 74px 1fr; align-items: center; gap: 14px; border-top: 1px solid var(--line); opacity: 0; transform: translateY(12px); animation: channel-in .45s calc(.25s + var(--item-delay)) ease forwards; }
 .channel-logo { display: flex; width: 70px; height: 54px; padding: 7px; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(97,23,34,.11); border-radius: 10px; background: #fff; box-shadow: 0 5px 13px rgba(75,43,34,.07); line-height: 0; }
 .channel-logo img { display: block; width: 100%; height: 100%; margin: auto; object-fit: contain; object-position: 50% 50%; }
 .channel-logo--dark { border-color: #253a55; background: #16283d; }
+.channel-logo--sprite { padding: 0; background-color: #fff; background-image: var(--logo-sprite); background-position: var(--logo-sprite-position); background-repeat: no-repeat; background-size: var(--logo-sprite-size); }
 .channel-logo img[src*="poya"], .channel-logo img[src*="yeschain"], .channel-logo img[src*="hilton"], .channel-logo img[src*="marriott"] { transform: translateY(-1px) scale(1.08); }
-.channel-item p { margin: 0; font-size: 18px; font-weight: 500; line-height: 1.5; }
+.channel-item p { display: flex; min-width: 0; margin: 0; flex-direction: column; gap: 3px; line-height: 1.45; }
+.channel-item p strong { font-size: 18px; font-weight: 500; }
+.channel-item p small { color: #9c674d; font-family: var(--utility); font-size: 14px; font-weight: 600; }
 .channel-empty { min-height: 190px; display: grid; align-content: center; justify-items: center; text-align: center; }
 .channel-empty p { color: var(--muted); font-size: 18px; line-height: 1.8; }
 .empty-pulse { width: 12px; height: 12px; margin-bottom: 25px; border-radius: 50%; background: var(--wine); box-shadow: 0 0 0 0 rgba(97,23,34,.3); animation: empty-pulse 2s infinite; }
