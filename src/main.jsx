@@ -90,17 +90,17 @@ function Hero() {
       <div className="steam steam--one" aria-hidden="true" />
       <div className="steam steam--two" aria-hidden="true" />
       <div className="hero-copy">
-        <p className="eyebrow hero-eyebrow">真材實料　　一顆剛好</p>
-        <h1><span>一顆黑糖磚</span><span>沖成一大杯</span></h1>
-        <p className="hero-lead"><span>甜度退後</span><span>食材的風味　才喝得出來</span></p>
-        <a className="text-link" href="#moments">看看什麼時候喝 <ArrowDown size={17} /></a>
+        <p className="eyebrow hero-eyebrow">一杯溫暖　留給努力的自己</p>
+        <h1><span>再忙</span><span>也可以給自己</span><span>放鬆的空間</span></h1>
+        <p className="hero-lead"><span>先停一下</span><span>把此刻留給自己</span></p>
+        <a className="text-link" href="#moments">找到此刻的一杯 <ArrowDown size={17} /></a>
       </div>
-      <div className="hero-media" aria-label="糖鼎黑糖飲與原料情境圖">
-        <img src="/assets/hero-tea-ritual.webp" alt="熱黑糖飲 黑糖磚 老薑與紅棗" />
+      <div className="hero-media" aria-label="工作中也為自己留一杯溫暖">
+        <img src="/assets/scenes/oolong-work.webp" alt="忙碌工作中停下來喝一杯溫暖飲品" />
         <span className="hero-media-ring hero-media-ring--one" />
         <span className="hero-media-ring hero-media-ring--two" />
       </div>
-      <div className="hero-index" aria-hidden="true"><span>01</span><i /><span>一杯剛好的真材實料</span></div>
+      <div className="hero-index" aria-hidden="true"><span>01</span><i /><span>今天也值得被好好照顧</span></div>
     </section>
   );
 }

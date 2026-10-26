@@ -200,7 +200,9 @@ p, h1, h2, h3 { margin-top: 0; }
 .hero-media {
   position: relative;
   z-index: 2;
-  height: clamp(380px, 52svh, 540px);
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
   margin: 30px 0 12px;
   overflow: hidden;
   border-radius: 30px 30px 8px 30px;
@@ -219,7 +221,7 @@ p, h1, h2, h3 { margin-top: 0; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 52% center;
+  object-position: 54% 46%;
   animation: photo-drift 12s ease-in-out infinite alternate;
 }
 
@@ -1072,6 +1074,7 @@ body.market-modal-open { overflow: hidden; }
   .hero { display: grid; min-height: 900px; padding: 150px 6vw 70px; grid-template-columns: .95fr 1.05fr; gap: 6vw; align-items: center; }
   .hero-copy { align-self: center; }
   .hero-media { width: min(45vw, 650px); height: min(72vh, 690px); margin: 0; }
+  .hero-media img { object-position: 54% 18%; }
   .hero-index { position: absolute; bottom: 55px; left: 6vw; }
   .section { padding: 150px 7vw; }
   .story { display: grid; grid-template-columns: 1.15fr .85fr; gap: 8vw; align-items: center; }
