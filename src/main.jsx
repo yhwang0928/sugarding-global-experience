@@ -507,13 +507,8 @@ function MarketPanel({ market }) {
           <div className="channel-list">
             {market.channels.map((channel, index) => (
               <div className="channel-item" key={channel.name} style={{ '--item-delay': `${index * 38}ms` }}>
-                <span
-                  className={cx('channel-logo', channel.logoTheme === 'dark' && 'channel-logo--dark', channel.sprite && 'channel-logo--sprite')}
-                  style={channel.sprite ? { '--logo-sprite': `url("${channel.sprite}")`, '--logo-sprite-size': channel.spriteSize, '--logo-sprite-position': channel.spritePosition } : undefined}
-                  role={channel.sprite ? 'img' : undefined}
-                  aria-label={channel.sprite ? `${channel.name} logo` : undefined}
-                >
-                  {channel.logo && <img src={channel.logo} alt={`${channel.name} logo`} loading="lazy" />}
+                <span className={cx('channel-logo', channel.logoTheme === 'dark' && 'channel-logo--dark')}>
+                  <img src={channel.logo} alt={`${channel.name} logo`} loading="lazy" />
                 </span>
                 <p><strong>{channel.name}</strong>{channel.count && <small>{channel.count}</small>}</p>
               </div>

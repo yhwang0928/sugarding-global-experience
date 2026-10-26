@@ -883,7 +883,6 @@ p, h1, h2, h3 { margin-top: 0; }
 .channel-logo { display: flex; width: 70px; height: 54px; padding: 7px; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(97,23,34,.11); border-radius: 10px; background: #fff; box-shadow: 0 5px 13px rgba(75,43,34,.07); line-height: 0; }
 .channel-logo img { display: block; width: 100%; height: 100%; margin: auto; object-fit: contain; object-position: 50% 50%; }
 .channel-logo--dark { border-color: #253a55; background: #16283d; }
-.channel-logo--sprite { padding: 0; background-color: #fff; background-image: var(--logo-sprite); background-position: var(--logo-sprite-position); background-repeat: no-repeat; background-size: var(--logo-sprite-size); }
 .channel-logo img[src*="poya"], .channel-logo img[src*="yeschain"], .channel-logo img[src*="hilton"], .channel-logo img[src*="marriott"] { transform: translateY(-1px) scale(1.08); }
 .channel-item p { display: flex; min-width: 0; margin: 0; flex-direction: column; gap: 3px; line-height: 1.45; }
 .channel-item p strong { font-size: 18px; font-weight: 500; }
