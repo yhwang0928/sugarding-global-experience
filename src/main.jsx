@@ -362,7 +362,7 @@ function FlavorStage({ flavor }) {
   );
 }
 
-function Flavors() {
+function useFlavorCarousel() {
   const [active, setActive] = useState(flavors[0].id);
   const swipeStart = useRef({ x: 0, y: 0 });
   const flavor = flavors.find((item) => item.id === active);
@@ -381,6 +381,55 @@ function Flavors() {
     const deltaY = touch.clientY - swipeStart.current.y;
     if (Math.abs(deltaX) > 52 && Math.abs(deltaX) > Math.abs(deltaY) * 1.15) goToFlavor(deltaX < 0 ? 1 : -1);
   };
+  return { active, setActive, flavor, activeIndex, goToFlavor, handleTouchStart, handleTouchEnd };
+}
+
+function Moments() {
+  const { active, setActive, flavor, activeIndex, goToFlavor, handleTouchStart, handleTouchEnd } = useFlavorCarousel();
+  return (
+    <section className="section flavors moments" id="moments">
+      <Reveal className="section-heading section-heading--center moments-heading">
+        <p className="eyebrow">什麼時候喝</p>
+        <h2><span>一杯溫暖</span><span>走進不同日常</span></h2>
+        <p>先從當下的心情出發<br />找到屬於此刻的照顧方式</p>
+      </Reveal>
+
+      <div className="moment-swipe-controls" aria-label="切換飲用情境">
+        <button onClick={() => goToFlavor(-1)} aria-label="上一個情境"><ChevronLeft /></button>
+        <div>
+          <small>{String(activeIndex + 1).padStart(2, '0')} / {String(flavors.length).padStart(2, '0')}</small>
+          <strong>{flavor.sceneLabel}</strong>
+          <span>左右滑動　切換情境場域</span>
+        </div>
+        <button onClick={() => goToFlavor(1)} aria-label="下一個情境"><ChevronRight /></button>
+      </div>
+
+      <div className="moment-stage" key={`${flavor.id}-scene`} aria-live="polite" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+        <div className="moment-stage__image">
+          <img src={flavor.sceneImage} alt={flavor.sceneAlt} />
+          <span>{flavor.sceneLabel}</span>
+        </div>
+        <div className="moment-stage__copy">
+          <p>{flavor.sceneFor}</p>
+          <h3>{flavor.sceneTitle.map((line) => <span key={line}>{line}</span>)}</h3>
+          <div>{flavor.sceneBody.split('\n').map((line) => <React.Fragment key={line}>{line}<br /></React.Fragment>)}</div>
+        </div>
+      </div>
+
+      <div className="moment-scene-tabs" role="tablist" aria-label="選擇飲用情境">
+        {flavors.map((item) => (
+          <button key={item.id} className={cx(item.id === active && 'is-active')} onClick={() => setActive(item.id)} role="tab" aria-selected={item.id === active}>
+            <span>{item.sceneLabel}</span>
+            <small>{item.sceneFor.replace(/^給/, '')}</small>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function FlavorShowcase() {
+  const { active, setActive, flavor, activeIndex, goToFlavor, handleTouchStart, handleTouchEnd } = useFlavorCarousel();
   useEffect(() => {
     flavors.forEach((item) => {
       [item.image, item.editorialImage, item.sceneImage].forEach((src) => {
@@ -390,67 +439,47 @@ function Flavors() {
     });
   }, []);
   return (
-    <section className="section flavors moments" id="moments">
-      <Reveal className="section-heading section-heading--center moments-heading">
-        <p className="eyebrow">什麼時候喝</p>
-        <h2><span>今天這一杯</span><span>想留給誰</span></h2>
-        <p>給自己一點時間<br />也把溫柔留給在意的人</p>
+    <section className="section flavor-showcase" id="flavors">
+      <Reveal className="section-heading flavor-showcase__heading">
+        <p className="eyebrow">五種口味</p>
+        <h2><span>每一種風味</span><span>都有自己的主角</span></h2>
+        <p>不是混在一起的甜<br />讓每一種真材都被好好喝見</p>
       </Reveal>
 
-      <div className="moment-swipe-controls" aria-label="切換飲用情境">
-        <button onClick={() => goToFlavor(-1)} aria-label="上一個情境"><ChevronLeft /></button>
+      <div className="flavor-showcase__controls" aria-label="切換口味">
+        <button onClick={() => goToFlavor(-1)} aria-label="上一個口味"><ChevronLeft /></button>
         <div>
           <small>{String(activeIndex + 1).padStart(2, '0')} / {String(flavors.length).padStart(2, '0')}</small>
-          <strong>{flavor.sceneLabel} · {flavor.short}</strong>
-          <span>左右滑動　場景與口味同步切換</span>
+          <strong>{flavor.name}</strong>
+          <span>左右滑動　探索五種風味</span>
         </div>
-        <button onClick={() => goToFlavor(1)} aria-label="下一個情境"><ChevronRight /></button>
+        <button onClick={() => goToFlavor(1)} aria-label="下一個口味"><ChevronRight /></button>
       </div>
 
-      <div className="moment-layout" key={`${flavor.id}-moment`} aria-live="polite" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-        <div className="moment-scene">
+      <div className="flavor-showcase__layout" key={`${flavor.id}-flavor`} aria-live="polite" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+        <figure className="flavor-showcase__image">
           <img src={flavor.editorialImage} alt={`${flavor.name}黑糖磚與真實原料靜物攝影`} />
-          <span>{flavor.name}</span>
-        </div>
+          <figcaption>{flavor.short}</figcaption>
+        </figure>
 
-        <div className="moment-story">
-          <div className="moment-context-photo">
-            <img src={flavor.sceneImage} alt={flavor.sceneAlt} />
-            <span>{flavor.sceneLabel}</span>
+        <div className="flavor-showcase__detail">
+          <div className="flavor-showcase__copy">
+            <p>{flavor.note}</p>
+            <h3>{flavor.name}</h3>
+            <strong>{flavor.description}</strong>
+            <div className="flavor-showcase__tags">{flavor.ingredients.map((item) => <span key={item}>{item}</span>)}</div>
           </div>
-          <div className="moment-story__copy">
-            <p className="moment-for">{flavor.sceneFor}</p>
-            <h3>{flavor.sceneTitle.map((line) => <span key={line}>{line}</span>)}</h3>
-            <p className="moment-body">{flavor.sceneBody.split('\n').map((line) => <React.Fragment key={line}>{line}<br /></React.Fragment>)}</p>
-            <div className="moment-story-tags" aria-label={`${flavor.name}主要原料`}>
-              <small>這一杯　{flavor.note}</small>
-              <div>{flavor.ingredients.map((item) => <span key={item}>{item}</span>)}</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="moment-ingredients">
-          <FlavorStage flavor={flavor} />
-          <div className="flavor-copy" key={`${flavor.id}-copy`}>
-            <p>{flavor.description}</p>
-            <div className="flavor-tags">{flavor.ingredients.map((item) => <span key={item}>{item}</span>)}</div>
+          <div className="flavor-showcase__motion" aria-label={`${flavor.name}原料凝聚動畫`}>
+            <FlavorStage flavor={flavor} />
           </div>
         </div>
       </div>
 
-      <div className="flavor-picker moment-picker" role="tablist" aria-label="選擇飲用情境">
+      <div className="flavor-showcase__tabs" role="tablist" aria-label="選擇口味">
         {flavors.map((item) => (
-          <button
-            key={item.id}
-            className={cx('flavor-option', item.id === active && 'is-active')}
-            style={{ '--option-color': item.color }}
-            onClick={() => setActive(item.id)}
-            role="tab"
-            aria-selected={item.id === active}
-          >
-            <span className="flavor-option__art"><img src={item.image} alt="" /></span>
-            <span className="flavor-option__copy"><small>{item.sceneLabel}</small><strong>{item.short}</strong></span>
-            <i aria-hidden="true" />
+          <button key={item.id} className={cx(item.id === active && 'is-active')} onClick={() => setActive(item.id)} role="tab" aria-selected={item.id === active}>
+            <img src={item.image} alt="" />
+            <span>{item.short}</span>
           </button>
         ))}
       </div>
@@ -735,7 +764,7 @@ function App() {
     if (!isAboutPage) document.title = '糖鼎 SUGAR DING｜台灣黑糖走進世界日常';
   }, [isAboutPage]);
   if (isAboutPage) return <AboutPage />;
-  return <><Hero /><main><ValueStory /><Flavors /><Story /><BrandProof /><AboutTeaser /><WorldMap /><Care /></main><Closing /></>;
+  return <><Hero /><main><ValueStory /><Moments /><FlavorShowcase /><Story /><BrandProof /><AboutTeaser /><WorldMap /><Care /></main><Closing /></>;
 }
 
 createRoot(document.getElementById('root')).render(<App />);
