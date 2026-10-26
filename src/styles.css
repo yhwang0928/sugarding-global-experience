@@ -621,7 +621,9 @@ p, h1, h2, h3 { margin-top: 0; }
 .moment-layout { display: grid; max-width: 1180px; margin: 42px auto 0; gap: 16px; animation: moment-enter .7s cubic-bezier(.16,1,.3,1) both; }
 .moment-scene {
   position: relative;
-  height: 450px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 32px 32px 8px 32px;
@@ -1045,7 +1047,7 @@ body.market-modal-open { overflow: hidden; }
 @media (min-width: 1000px) {
   .flavor-picker { width: min(100%, 1040px); margin: 9px auto -25px; justify-content: center; }
   .moment-layout { grid-template-columns: 1.08fr .92fr; grid-template-rows: auto auto; gap: 18px; }
-  .moment-scene { height: 760px; grid-row: 1 / 3; }
+  .moment-scene { height: auto; aspect-ratio: 4 / 5; grid-row: 1 / 3; }
   .moment-story { padding: 44px 42px; }
   .moment-story h3 { font-size: clamp(38px, 4vw, 54px); }
   .moment-body { font-size: 18px; }
