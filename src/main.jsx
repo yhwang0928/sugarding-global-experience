@@ -488,23 +488,44 @@ function FlavorShowcase() {
 }
 
 function MarketPanel({ market }) {
+  const hasMarketDetails = Boolean(market.channels.length || market.channelBoard || market.stats?.length);
   return (
     <div className="market-panel" key={market.id} aria-live="polite">
       <div className="panel-grab" />
       <div className="panel-heading">
         <div><p>{market.en}</p><h3>{market.name}</h3></div>
-        <strong>{market.channels.length ? `${market.channels.length} 個通路品牌` : '已進入市場'}</strong>
+        <strong>{market.summary || (market.channels.length ? `${market.channels.length} 個通路品牌` : '已進入市場')}</strong>
       </div>
-      {market.channels.length ? (
-        <div className="channel-list">
-          {market.channels.map((channel, index) => (
-            <div className="channel-item" key={channel.name} style={{ '--item-delay': `${index * 38}ms` }}>
-              <span className={cx('channel-logo', channel.logoTheme === 'dark' && 'channel-logo--dark')}><img src={channel.logo} alt={`${channel.name} logo`} loading="lazy" /></span>
-              <p>{channel.name}</p>
-            </div>
-          ))}
+      {market.stats?.length > 0 && (
+        <div className="market-stats" aria-label={`${market.name}通路規模`}>
+          {market.stats.map((stat) => <div className="market-stat" key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></div>)}
         </div>
-      ) : (
+      )}
+      {market.channelBoard && (
+        <figure className="channel-board">
+          <img src={market.channelBoard} alt={market.channelBoardAlt} loading="lazy" />
+          <figcaption>部分合作通路品牌</figcaption>
+        </figure>
+      )}
+      {market.channelHighlights?.length > 0 && (
+        <div className="channel-highlights" aria-label={`${market.name}合作通路品牌`}>
+          {market.channelHighlights.map((channel) => <span key={channel}>{channel}</span>)}
+        </div>
+      )}
+      {market.channels.length > 0 && (
+        <>
+          <h4 className="channel-list-title">主要通路品牌</h4>
+          <div className="channel-list">
+            {market.channels.map((channel, index) => (
+              <div className="channel-item" key={channel.name} style={{ '--item-delay': `${index * 38}ms` }}>
+                <span className={cx('channel-logo', channel.logoTheme === 'dark' && 'channel-logo--dark')}><img src={channel.logo} alt={`${channel.name} logo`} loading="lazy" /></span>
+                <p>{channel.name}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+      {!hasMarketDetails && (
         <div className="channel-empty">
           <span className="empty-pulse" />
           <p>糖鼎已走進{market.name}<br />通路名單整理中</p>
@@ -566,7 +587,7 @@ function WorldMap() {
                 <div className="country-slide__copy">
                   <p><MapPin size={17} /> SUGAR DING IN {market.en.toUpperCase()}</p>
                   <h3>{market.name}</h3>
-                  <span>{market.channels.length ? `${market.channels.length} 個通路品牌` : '已進入市場'}</span>
+                  <span>{market.summary || (market.channels.length ? `${market.channels.length} 個通路品牌` : '已進入市場')}</span>
                   <strong>查看當地通路 <ArrowUpRight size={18} /></strong>
                 </div>
               </button>

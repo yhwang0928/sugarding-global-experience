@@ -105,6 +105,13 @@ export const markets = [
     mapColor: '#e36d5b',
     icon: '/assets/countries/taiwan.webp',
     coordinates: [121.0, 23.7],
+    summary: '2,000+ 間通路與藥妝店',
+    stats: [
+      { value: '2,000+', label: '通路與藥妝店' },
+      { value: '15,000+', label: '銷售數據串接' },
+    ],
+    channelBoard: '/assets/channels/taiwan-network.jpg',
+    channelBoardAlt: '台灣電商、超商、藥妝與合作推廣通路品牌',
     channels: [
       { name: 'POYA 寶雅', logo: '/assets/retailers/poya.png' },
       { name: '康是美', logo: '/assets/retailers/cosmed.png' },
@@ -129,6 +136,7 @@ export const markets = [
     mapColor: '#e2a844',
     icon: '/assets/countries/usa.webp',
     coordinates: [-98.5, 39.5],
+    summary: '5 個主要通路品牌',
     channels: [
       { name: 'Great Wall Supermarket 大中華超市', logo: '/assets/retailers/greatwall.png' },
       { name: 'Good Fortune 好運來超市', logo: '/assets/retailers/goodfortune.png' },
@@ -145,6 +153,11 @@ export const markets = [
     mapColor: '#cf526f',
     icon: '/assets/countries/japan.webp',
     coordinates: [138.2, 36.2],
+    summary: '1,500+ 間合作通路',
+    stats: [{ value: '1,500+', label: '日本合作通路' }],
+    channelBoard: '/assets/channels/japan-network.jpg',
+    channelBoardAlt: '日本合作通路品牌，包含松本清、AEON、DON DON DONKI、成城石井與 Rakuten',
+    channelHighlights: ['通販億', 'bCODE', '松本清', 'KALDI COFFEE FARM', 'AEON', 'DON DON DONKI', '成城石井', 'Rakuten'],
     channels: [],
   },
   {
@@ -155,6 +168,14 @@ export const markets = [
     mapColor: '#35a487',
     icon: '/assets/countries/malaysia.webp',
     coordinates: [101.7, 3.1],
+    summary: '多家大型連鎖藥局通路',
+    stats: [
+      { value: '700+', label: 'Watsons 門市' },
+      { value: '600+', label: 'Guardian 門市' },
+    ],
+    channelBoard: '/assets/channels/malaysia-network.jpg',
+    channelBoardAlt: '馬來西亞合作連鎖藥局品牌與門市數',
+    channelHighlights: ['Watsons 700+', 'Guardian 600+', 'BIG Pharmacy 300+', 'Alpro Pharmacy 300+', 'Health Lane 200+', 'Sunway Multicare 160+', 'AA Pharmacy 80+', 'Georgetown Pharmacy 50+', 'AM PM Pharmacy 40+', 'HTM Pharmacy 30+', 'Mega Kulim Pharmacy 30+'],
     channels: [],
   },
   {
