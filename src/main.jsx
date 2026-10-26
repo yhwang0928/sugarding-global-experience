@@ -71,8 +71,8 @@ function Header({ page = 'home', light = false }) {
         {open ? <X /> : <Menu />}
       </button>
       <nav className={cx('site-nav', open && 'is-open')} aria-label="主要選單">
-        <a href={sectionLink('#why-drink')} onClick={close}>為什麼喝</a>
         <a href={sectionLink('#moments')} onClick={close}>什麼時候喝</a>
+        <a href={sectionLink('#why-drink')} onClick={close}>為什麼喝</a>
         <a href={sectionLink('#why-us')} onClick={close}>為什麼選糖鼎</a>
         <a href={sectionLink('#world')} onClick={close}>哪裡買</a>
         <a href={sectionLink('#care')} onClick={close}>社會回饋</a>
@@ -93,7 +93,7 @@ function Hero() {
         <p className="eyebrow hero-eyebrow">真材實料　　一顆剛好</p>
         <h1><span>一顆黑糖磚</span><span>沖成一大杯</span></h1>
         <p className="hero-lead"><span>甜度退後</span><span>食材的風味　才喝得出來</span></p>
-        <a className="text-link" href="#why-drink">從這一杯開始 <ArrowDown size={17} /></a>
+        <a className="text-link" href="#moments">看看什麼時候喝 <ArrowDown size={17} /></a>
       </div>
       <div className="hero-media" aria-label="糖鼎黑糖飲與原料情境圖">
         <img src="/assets/hero-tea-ritual.webp" alt="熱黑糖飲 黑糖磚 老薑與紅棗" />
@@ -764,7 +764,7 @@ function App() {
     if (!isAboutPage) document.title = '糖鼎 SUGAR DING｜台灣黑糖走進世界日常';
   }, [isAboutPage]);
   if (isAboutPage) return <AboutPage />;
-  return <><Hero /><main><ValueStory /><Moments /><FlavorShowcase /><Story /><BrandProof /><AboutTeaser /><WorldMap /><Care /></main><Closing /></>;
+  return <><Hero /><main><Moments /><ValueStory /><FlavorShowcase /><Story /><BrandProof /><AboutTeaser /><WorldMap /><Care /></main><Closing /></>;
 }
 
 createRoot(document.getElementById('root')).render(<App />);
