@@ -14,9 +14,7 @@
     "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-simple-maps": "latest",
-    "vite": "latest",
-    "world-atlas": "latest"
+    "vite": "latest"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.65.0",

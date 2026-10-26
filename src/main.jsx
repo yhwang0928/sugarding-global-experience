@@ -1,8 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Award, HandHeart, Heart, Menu, Pause, Play, ShieldCheck, Sprout, Users, X } from 'lucide-react';
-import { ComposableMap, Geographies, Geography, Line, Marker, ZoomableGroup } from 'react-simple-maps';
-import worldData from 'world-atlas/countries-110m.json';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Award, ChevronLeft, ChevronRight, HandHeart, Heart, MapPin, Menu, ShieldCheck, Sprout, Users, X } from 'lucide-react';
 import { features, flavors, markets } from './data';
 import './styles.css';
 
@@ -137,20 +135,13 @@ function ValueStory() {
   return (
     <section className="section value-story" id="why-drink" aria-labelledby="value-story-title">
       <Reveal className="value-story__visual">
-        <div className="value-cup" aria-hidden="true">
-          <div className="value-cup__steam"><i /><i /><i /></div>
-          <div className="value-cup__glass">
-            <div className="value-cup__tea" />
-            <img src="/assets/flavor-cube-only.webp" alt="" />
-          </div>
-          <div className="value-cup__measure">
-            <span><b>400</b> ml</span>
-            <span><b>300</b></span>
-            <span><b>200</b></span>
-            <span><b>100</b></span>
+        <div className="value-photo">
+          <img src="/assets/premium-brown-sugar-dissolve.webp" alt="一顆黑糖磚在熱飲中慢慢化開" />
+          <div className="value-photo__caption">
+            <span>一顆慢慢化開<br />風味跟著展開</span>
+            <strong><b>300–400</b><small>ml</small></strong>
           </div>
         </div>
-        <p>建議沖泡水量　300–400ml</p>
       </Reveal>
 
       <div className="value-story__content">
@@ -201,9 +192,9 @@ function BrandProof() {
         </Reveal>
 
         <Reveal className="proof-card proof-card--world" delay={110}>
-          <div className="proof-orbit" aria-hidden="true">
-            {markets.map((market, index) => <i key={market.id} style={{ '--market-index': index }} />)}
-            <b>6</b>
+          <div className="proof-market-film" aria-hidden="true">
+            {markets.slice(0, 3).map((market) => <img src={market.icon} alt="" key={market.id} loading="lazy" />)}
+            <span><b>6</b><small>MARKETS</small></span>
           </div>
           <p className="proof-card__label">六個市場　已經品嚐</p>
           <h3>從台灣出發<br />讓好口味串連全世界</h3>
@@ -314,7 +305,23 @@ function FlavorStage({ flavor }) {
 
 function Flavors() {
   const [active, setActive] = useState(flavors[0].id);
+  const swipeStart = useRef({ x: 0, y: 0 });
   const flavor = flavors.find((item) => item.id === active);
+  const activeIndex = flavors.findIndex((item) => item.id === active);
+  const goToFlavor = (direction) => {
+    const nextIndex = (activeIndex + direction + flavors.length) % flavors.length;
+    setActive(flavors[nextIndex].id);
+  };
+  const handleTouchStart = (event) => {
+    const touch = event.changedTouches[0];
+    swipeStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+  const handleTouchEnd = (event) => {
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - swipeStart.current.x;
+    const deltaY = touch.clientY - swipeStart.current.y;
+    if (Math.abs(deltaX) > 52 && Math.abs(deltaX) > Math.abs(deltaY) * 1.15) goToFlavor(deltaX < 0 ? 1 : -1);
+  };
   useEffect(() => {
     flavors.forEach((item) => {
       [item.image, item.sceneImage].forEach((src) => {
@@ -331,7 +338,17 @@ function Flavors() {
         <p>給自己一點時間<br />也把溫柔留給在意的人</p>
       </Reveal>
 
-      <div className="moment-layout" key={`${flavor.id}-moment`} aria-live="polite">
+      <div className="moment-swipe-controls" aria-label="切換飲用情境">
+        <button onClick={() => goToFlavor(-1)} aria-label="上一個情境"><ChevronLeft /></button>
+        <div>
+          <small>{String(activeIndex + 1).padStart(2, '0')} / {String(flavors.length).padStart(2, '0')}</small>
+          <strong>{flavor.sceneLabel}</strong>
+          <span>左右滑動切換情境</span>
+        </div>
+        <button onClick={() => goToFlavor(1)} aria-label="下一個情境"><ChevronRight /></button>
+      </div>
+
+      <div className="moment-layout" key={`${flavor.id}-moment`} aria-live="polite" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
         <div className="moment-scene">
           <img src={flavor.sceneImage} alt={flavor.sceneAlt} />
           <span>{flavor.sceneLabel}</span>
@@ -404,117 +421,96 @@ function MarketPanel({ market }) {
 }
 
 function WorldMap() {
-  const [activeId, setActiveId] = useState('taiwan');
-  const [playing, setPlaying] = useState(true);
-  const active = useMemo(() => markets.find((market) => market.id === activeId), [activeId]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedMarket, setSelectedMarket] = useState(null);
+  const countrySwipeStart = useRef({ x: 0, y: 0 });
   const reduced = useReducedMotion();
-  useEffect(() => {
-    if (!playing || reduced) return undefined;
-    const timer = window.setInterval(() => {
-      setActiveId((current) => markets[(markets.findIndex((market) => market.id === current) + 1) % markets.length].id);
-    }, 6000);
-    return () => window.clearInterval(timer);
-  }, [playing, reduced]);
+  const goToMarket = (direction) => setActiveIndex((current) => (current + direction + markets.length) % markets.length);
 
-  const selectMarket = (id) => {
-    setPlaying(false);
-    setActiveId(id);
+  useEffect(() => {
+    if (reduced || selectedMarket) return undefined;
+    const timer = window.setInterval(() => setActiveIndex((current) => (current + 1) % markets.length), 5200);
+    return () => window.clearInterval(timer);
+  }, [reduced, selectedMarket]);
+
+  useEffect(() => {
+    document.body.classList.toggle('market-modal-open', Boolean(selectedMarket));
+    const closeWithEscape = (event) => event.key === 'Escape' && setSelectedMarket(null);
+    window.addEventListener('keydown', closeWithEscape);
+    return () => {
+      document.body.classList.remove('market-modal-open');
+      window.removeEventListener('keydown', closeWithEscape);
+    };
+  }, [selectedMarket]);
+
+  const handleCountryTouchStart = (event) => {
+    const touch = event.changedTouches[0];
+    countrySwipeStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+  const handleCountryTouchEnd = (event) => {
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - countrySwipeStart.current.x;
+    const deltaY = touch.clientY - countrySwipeStart.current.y;
+    if (Math.abs(deltaX) > 52 && Math.abs(deltaX) > Math.abs(deltaY) * 1.15) goToMarket(deltaX < 0 ? 1 : -1);
   };
 
   return (
     <section className="section world" id="world">
       <Reveal className="section-heading section-heading--world">
-        <p className="eyebrow">Global presence</p>
+        <p className="eyebrow">哪裡買得到</p>
         <h2><span>從台灣出發</span><span>走進六個市場</span></h2>
-        <p>讓好口味　在全世界都能品嚐</p>
+        <p>滑動看看糖鼎走到哪裡<br />點選國家　查看當地通路</p>
       </Reveal>
-      <div className="map-shell">
-        <button className="motion-toggle" onClick={() => setPlaying(!playing)} aria-label={playing ? '暫停自動輪播' : '播放自動輪播'}>
-          {playing ? <Pause size={14} /> : <Play size={14} />}{playing ? '暫停' : '播放'}
-        </button>
-        <div className="map-wrap" aria-label="糖鼎全球市場互動地圖">
-          <ComposableMap projectionConfig={{ scale: 138 }} width={800} height={480}>
-            <ZoomableGroup center={[10, 8]} zoom={1} minZoom={1} maxZoom={1}>
-              <g className="map-depth-layer" transform="translate(0 5)">
-                <Geographies geography={worldData}>
-                  {({ geographies }) => geographies.map((geo) => {
-                    const market = markets.find((item) => item.geoId === String(geo.id));
-                    return (
-                      <Geography
-                        key={`depth-${geo.rsmKey}`}
-                        geography={geo}
-                        className="map-country-depth"
-                        style={{ fill: market ? '#5c2835' : '#76534b', outline: 'none' }}
-                        tabIndex={-1}
-                      />
-                    );
-                  })}
-                </Geographies>
-              </g>
-              <Geographies geography={worldData}>
-                {({ geographies }) => geographies.map((geo) => {
-                  const geoId = String(geo.id);
-                  const market = markets.find((item) => item.geoId === geoId);
-                  const isMarket = Boolean(market);
-                  const isSelected = active.geoId === geoId;
-                  return (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      className={cx('map-country', isMarket && 'is-market', isSelected && 'is-selected')}
-                      style={{ fill: isSelected ? '#ffd16f' : (market?.mapColor || '#d8cdb8'), outline: 'none' }}
-                      tabIndex={-1}
-                    />
-                  );
-                })}
-              </Geographies>
-              {active.id !== 'taiwan' && (
-                <Line
-                  from={markets[0].coordinates}
-                  to={active.coordinates}
-                  stroke="#d48930"
-                  strokeWidth={2.2}
-                  fill="transparent"
-                  strokeLinecap="round"
-                  className="market-route"
-                />
-              )}
-              {markets.map((market) => (
-                <Marker key={market.id} coordinates={market.coordinates}>
-                  <g
-                    className={cx('map-marker', activeId === market.id && 'is-active', market.id === 'taiwan' && 'is-origin')}
-                    onClick={() => selectMarket(market.id)}
-                    onKeyDown={(event) => (event.key === 'Enter' || event.key === ' ') && selectMarket(market.id)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`選擇${market.name}`}
-                  >
-                    <circle className="marker-pulse" r="13" />
-                    <circle className="marker-core" r="7" />
-                    <circle className="marker-dot" r="2.4" />
-                    {activeId === market.id && <text y="-15" textAnchor="middle">{market.name}</text>}
-                  </g>
-                </Marker>
-              ))}
-            </ZoomableGroup>
-          </ComposableMap>
-          <div className="route-light" key={activeId} aria-hidden="true" />
+
+      <div className="country-showcase">
+        <div className="country-stage" onTouchStart={handleCountryTouchStart} onTouchEnd={handleCountryTouchEnd}>
+          <div className="country-track" style={{ transform: `translate3d(-${activeIndex * 100}%,0,0)` }}>
+            {markets.map((market, index) => (
+              <button className="country-slide" key={market.id} onClick={() => setSelectedMarket(market)} aria-label={`查看${market.name}通路`} tabIndex={index === activeIndex ? 0 : -1}>
+                <img src={market.icon} alt={`${market.name}代表地標`} />
+                <span className="country-slide__shade" />
+                <div className="country-slide__copy">
+                  <p><MapPin size={17} /> SUGAR DING IN {market.en.toUpperCase()}</p>
+                  <h3>{market.name}</h3>
+                  <span>{market.channels.length ? `${market.channels.length} 個通路品牌` : '已進入市場'}</span>
+                  <strong>查看當地通路 <ArrowUpRight size={18} /></strong>
+                </div>
+              </button>
+            ))}
+          </div>
+          <button className="country-arrow country-arrow--left" onClick={() => goToMarket(-1)} aria-label="上一個國家"><ChevronLeft /></button>
+          <button className="country-arrow country-arrow--right" onClick={() => goToMarket(1)} aria-label="下一個國家"><ChevronRight /></button>
+          <div className="country-count" aria-hidden="true"><b>{String(activeIndex + 1).padStart(2, '0')}</b><i /><span>{String(markets.length).padStart(2, '0')}</span></div>
         </div>
-        <div className="market-picker" role="tablist" aria-label="選擇市場">
-          {markets.map((market) => (
+
+        <div className="country-thumbnails" role="tablist" aria-label="選擇市場">
+          {markets.map((market, index) => (
             <button
-              className={cx('market-option', activeId === market.id && 'is-active')}
+              className={cx('country-thumbnail', index === activeIndex && 'is-active')}
               key={market.id}
-              onClick={() => selectMarket(market.id)}
+              onClick={() => { setActiveIndex(index); setSelectedMarket(market); }}
               role="tab"
-              aria-selected={activeId === market.id}
+              aria-selected={index === activeIndex}
             >
-              <span><img src={market.icon} alt={`${market.name}代表地標`} /></span><small>{market.name}</small>
+              <img src={market.icon} alt="" /><span><small>{market.en}</small><strong>{market.name}</strong></span>
             </button>
           ))}
         </div>
-        <MarketPanel market={active} />
+        <p className="country-swipe-hint"><ChevronLeft size={16} /> 左右滑動探索六個市場 <ChevronRight size={16} /></p>
       </div>
+
+      {selectedMarket && (
+        <div className="country-modal" role="dialog" aria-modal="true" aria-label={`${selectedMarket.name}通路資訊`} onClick={() => setSelectedMarket(null)}>
+          <div className="country-modal__sheet" onClick={(event) => event.stopPropagation()}>
+            <button className="country-modal__close" onClick={() => setSelectedMarket(null)} aria-label="關閉通路資訊"><X /></button>
+            <div className="country-modal__hero">
+              <img src={selectedMarket.icon} alt={`${selectedMarket.name}代表地標`} />
+              <span>{selectedMarket.en}</span>
+            </div>
+            <MarketPanel market={selectedMarket} />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
