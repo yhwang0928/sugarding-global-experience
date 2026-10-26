@@ -339,27 +339,29 @@ function Care() {
         </Reveal>
 
         <div className="care-action-grid">
-          <Reveal className="care-action-card" delay={100}>
+          <Reveal className="care-action-card care-action-card--eye" delay={100}>
             <figure className="care-action-card__media">
-              <img src="/assets/care/eye-power.webp" alt="糖鼎贊助愛盲基金會 EYE 的美力活動紀錄" loading="lazy" />
-              <figcaption>公益活動贊助</figcaption>
+              <img src="/assets/care/eye-power.webp" alt="糖鼎黑糖團隊與愛盲基金會 EYE 的美力活動背板合影" loading="lazy" />
+              <figcaption>活動現場</figcaption>
             </figure>
             <div className="care-action-card__body">
               <div className="care-action-card__meta"><span>愛盲基金會</span><em>女性自主</em></div>
               <h4>攜手「EYE 的美力」<br />為女性自主加點溫柔力量</h4>
               <p>支持愛盲基金會募款與女性培力計畫，讓需要被看見的力量，有機會被更多人接住。</p>
+              <a className="care-action-card__source" href="https://www.gingertw.com/index.php?information_id=84&route=information/information" target="_blank" rel="noreferrer">查看完整活動介紹 <ArrowUpRight aria-hidden="true" /></a>
             </div>
           </Reveal>
 
           <Reveal className="care-action-card care-action-card--news" delay={180}>
             <figure className="care-action-card__media">
-              <img src="/assets/care/period-poverty.webp" alt="東森新聞報導糖鼎攜手勵馨基金會關注月經貧窮" loading="lazy" />
-              <figcaption>東森新聞報導</figcaption>
+              <img src="/assets/care/period-poverty.webp" alt="糖鼎黑糖、勵馨基金會與女力學院發起月經貧窮公益行動" loading="lazy" />
+              <figcaption>聯名倡議主視覺</figcaption>
             </figure>
             <div className="care-action-card__body">
               <div className="care-action-card__meta"><span>勵馨基金會</span><em>月經平權</em></div>
               <h4>關注月經貧窮<br />幫助女孩活出新自我</h4>
               <p>透過商品募集與衛生棉捐贈，把每一次消費選擇轉化為實際支持，陪女孩更自在地向前走。</p>
+              <a className="care-action-card__source" href="https://news.ebc.net.tw/news/living/449387" target="_blank" rel="noreferrer">閱讀東森完整報導 <ArrowUpRight aria-hidden="true" /></a>
             </div>
           </Reveal>
         </div>
@@ -790,7 +792,7 @@ function AboutPage() {
               ['2019', '育幼院關懷活動', '/assets/about/about-charity-2019.jpg'],
               ['2021', '伊甸基金會參訪活動', '/assets/about/about-charity-2021.jpg'],
               ['2022', '志工淨灘活動', '/assets/about/about-charity-2022.jpg'],
-              ['2024', '愛盲基金會「EYE 的美力」', '/assets/care/eye-power.webp', true],
+              ['2025', '愛盲基金會「EYE 的美力」', '/assets/care/eye-power.webp', true],
               ['2024', '勵馨基金會月經貧窮倡議', '/assets/care/period-poverty.webp', true],
             ].map(([year, title, image, evidence], index) => (
               <Reveal className={cx('impact-card', evidence && 'impact-card--evidence')} delay={index * 90} key={`${year}-${title}`}>
