@@ -164,7 +164,7 @@ function ValueStory() {
         <div className="value-photo">
           <img src="/assets/premium-brown-sugar-dissolve.webp" alt="一顆黑糖磚在熱飲中慢慢化開" />
           <div className="value-photo__caption">
-            <span>一顆慢慢化開<br />風味跟著展開</span>
+            <span>一顆慢慢化開，<br />心的累也開了</span>
             <strong><b>300–400</b><small>ml</small></strong>
           </div>
         </div>
@@ -174,30 +174,17 @@ function ValueStory() {
         <Reveal className="section-heading">
           <p className="eyebrow">為什麼喝　　一顆剛好</p>
           <h2 id="value-story-title"><span>不是買一顆糖</span><span>是買一杯真實風味</span></h2>
-          <p>一顆定量　不用秤不用猜<br />沖成一大杯　仍然喝得到食材主角</p>
-        </Reveal>
-
-        <div className="value-metrics">
-          <Reveal className="value-metric" delay={80}>
-            <strong>30<small>g</small></strong><span>一顆定量</span>
-          </Reveal>
-          <Reveal className="value-metric" delay={150}>
-            <strong>7<small>杯</small></strong><span>剛好一週</span>
-          </Reveal>
-        </div>
-
-        <Reveal className="value-note" delay={280}>
-          <p><span>甜度退後</span><strong>食材風味向前</strong></p>
-          <small>一顆一杯　不用秤量　也不用猜比例</small>
         </Reveal>
       </div>
 
       <Reveal className="brew-guide" delay={120}>
         <div className="brew-guide__intro">
           <p className="eyebrow">茶藝師調整的風味比例</p>
-          <h3><span>為什麼一顆</span><span>剛好是 30g</span></h3>
-          <p>不是隨意決定的大小<br />而是反覆調整甜度　香氣與食材風味後<br />找到最平衡的一杯</p>
-          <div className="brew-guide__formula"><strong>1</strong><span>顆 30g</span><i /> <strong>300–400</strong><span>ml 熱水</span></div>
+          <div className="brew-guide__formula" aria-label="一顆黑糖磚搭配三百至四百毫升熱水">
+            <strong>1</strong><span>顆</span><i /><strong>300–400</strong><span>ml 熱水</span>
+          </div>
+          <h3><span>一顆配一大杯</span><span>風味最好入口</span></h3>
+          <p>甜度　香氣與食材風味<br />都在這個比例裡剛剛好</p>
         </div>
 
         <div className="brew-guide__daily" aria-label="日常容器沖泡比例">

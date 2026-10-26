@@ -419,34 +419,6 @@ p, h1, h2, h3 { margin-top: 0; }
 .value-cup__steam i:nth-child(2) { left: 65px; height: 96px; animation-delay: -2.1s; }
 .value-cup__steam i:nth-child(3) { left: 105px; height: 72px; animation-delay: -3s; }
 .value-story__content { margin-top: 58px; }
-.value-metrics {
-  display: grid;
-  margin-top: 38px;
-  padding: 25px 0;
-  grid-template-columns: repeat(2, 1fr);
-  border-top: 1px solid rgba(97,23,34,.2);
-  border-bottom: 1px solid rgba(97,23,34,.2);
-}
-.value-metric { display: flex; min-width: 0; padding: 0 8px; flex-direction: column; text-align: center; }
-.value-metric + .value-metric { border-left: 1px solid rgba(97,23,34,.17); }
-.value-metric strong { color: var(--wine); font-family: var(--serif); font-size: clamp(39px, 12vw, 58px); font-weight: 500; letter-spacing: -.06em; line-height: 1; }
-.value-metric strong small { margin-left: 3px; font-family: var(--sans); font-size: 15px; font-weight: 600; letter-spacing: 0; }
-.value-metric > span { margin-top: 11px; color: #75584d; font-size: 14px; font-weight: 600; white-space: nowrap; }
-.value-note {
-  position: relative;
-  margin-top: 30px;
-  padding: 25px 24px;
-  overflow: hidden;
-  color: #fff8ed;
-  border-radius: 6px 24px 24px 24px;
-  background: linear-gradient(135deg, #6b1a2a, #3b0c16);
-  box-shadow: 0 16px 38px rgba(74,21,31,.16);
-}
-.value-note::after { position: absolute; top: -58px; right: -54px; width: 150px; height: 150px; border: 1px solid rgba(241,196,125,.2); border-radius: 50%; content: ''; box-shadow: 0 0 0 22px rgba(241,196,125,.035); }
-.value-note p { position: relative; z-index: 1; display: flex; margin-bottom: 13px; align-items: baseline; gap: 11px; }
-.value-note p span { color: var(--amber-light); font-size: 15px; font-weight: 600; }
-.value-note p strong { font-family: var(--serif); font-size: 25px; font-weight: 500; }
-.value-note > small { position: relative; z-index: 1; color: rgba(255,248,237,.62); font-size: 14px; line-height: 1.7; }
 .value-story__visual { display: block; min-height: 540px; padding: 0; }
 .value-photo { position: absolute; inset: 0; overflow: hidden; }
 .value-photo::after { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(32,2,8,.02) 36%, rgba(30,3,8,.84) 100%); content: ''; }
@@ -464,14 +436,14 @@ p, h1, h2, h3 { margin-top: 0; }
   padding: 28px 0 0;
   border-top: 1px solid rgba(97,23,34,.2);
 }
-.brew-guide__intro .eyebrow { margin-bottom: 17px; }
-.brew-guide__intro h3 { margin-bottom: 18px; color: var(--wine); font-family: var(--serif); font-size: clamp(35px, 10vw, 50px); font-weight: 500; letter-spacing: -.04em; line-height: 1.35; }
+.brew-guide__intro .eyebrow { margin-bottom: 18px; }
+.brew-guide__intro h3 { margin: 28px 0 15px; color: var(--wine); font-family: var(--serif); font-size: clamp(35px, 10vw, 50px); font-weight: 500; letter-spacing: -.04em; line-height: 1.35; }
 .brew-guide__intro h3 span { display: block; }
 .brew-guide__intro > p:last-of-type { margin-bottom: 0; color: #745b51; font-size: 17px; line-height: 1.85; }
-.brew-guide__formula { display: flex; margin-top: 25px; padding: 19px 20px; align-items: baseline; gap: 7px; color: #fff8ed; border-radius: 7px 22px 22px 22px; background: linear-gradient(120deg, var(--wine), var(--wine-dark)); box-shadow: 0 18px 38px rgba(79,17,29,.18); }
-.brew-guide__formula strong { font-family: var(--serif); font-size: 31px; font-weight: 500; line-height: 1; }
-.brew-guide__formula span { color: rgba(255,248,237,.76); font-size: 14px; white-space: nowrap; }
-.brew-guide__formula i { width: 28px; height: 1px; margin-inline: auto; background: rgba(241,196,125,.55); }
+.brew-guide__formula { display: flex; padding: 22px 21px; align-items: baseline; gap: 8px; color: #fff8ed; border: 1px solid rgba(241,196,125,.18); border-radius: 7px 24px 24px 24px; background: linear-gradient(120deg, #78182e, var(--wine-dark)); box-shadow: 0 20px 42px rgba(79,17,29,.22); }
+.brew-guide__formula strong { font-family: var(--serif); font-size: clamp(34px, 10vw, 48px); font-weight: 500; letter-spacing: -.04em; line-height: 1; }
+.brew-guide__formula span { color: rgba(255,248,237,.78); font-size: 15px; white-space: nowrap; }
+.brew-guide__formula i { width: 30px; height: 1px; margin-inline: auto; background: rgba(241,196,125,.68); }
 .brew-guide__daily { margin-top: 42px; }
 .brew-guide__daily-heading { display: flex; margin-bottom: 18px; flex-direction: column; gap: 4px; }
 .brew-guide__daily-heading strong { color: var(--wine); font-family: var(--serif); font-size: 25px; font-weight: 600; }
@@ -1116,15 +1088,11 @@ body.market-modal-open { overflow: hidden; }
   .story-content { margin-top: 0; }
   .feature-list { margin-top: 45px; }
   .feature-row { padding: 35px 0; grid-template-columns: 52px 1fr; }
-  .value-story { display: grid; min-height: 820px; grid-template-columns: 1fr 1fr; align-items: center; gap: 8vw; }
+  .value-story { display: grid; min-height: 0; grid-template-columns: 1fr 1fr; align-items: center; column-gap: 8vw; row-gap: 64px; }
   .value-story__visual { min-height: 620px; }
   .value-story__content { margin-top: 0; }
   .value-cup { transform: scale(1.1); }
-  .value-metrics { margin-top: 46px; }
-  .value-metric { padding-inline: 14px; }
-  .value-metric > span { font-size: 15px; }
-  .value-note { margin-top: 36px; padding: 29px 30px; }
-  .brew-guide { margin-top: 95px; padding-top: 48px; grid-column: 1 / -1; }
+  .brew-guide { margin-top: 0; padding-top: 48px; grid-column: 1 / -1; }
   .brew-guide__intro h3 { font-size: clamp(42px, 4vw, 58px); }
   .brew-vessels { grid-template-columns: repeat(3, 1fr); }
   .brew-vessel { min-height: 248px; padding: 25px 21px 22px; }
