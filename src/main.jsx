@@ -132,6 +132,32 @@ function Story() {
 }
 
 function ValueStory() {
+  const brewScenarios = [
+    {
+      id: 'mug',
+      label: '自己喝',
+      vessel: '大馬克杯',
+      volume: '300–400 ml',
+      cubes: 1,
+      note: '一顆直接沖泡',
+    },
+    {
+      id: 'bottle',
+      label: '帶著走',
+      vessel: '500 ml 保溫瓶',
+      volume: '約七至八分滿',
+      cubes: 1,
+      note: '不用刻意裝滿',
+    },
+    {
+      id: 'pot',
+      label: '朋友來訪',
+      vessel: '分享壺',
+      volume: '900–1200 ml',
+      cubes: 3,
+      note: '約可分享三至四杯',
+    },
+  ];
   return (
     <section className="section value-story" id="why-drink" aria-labelledby="value-story-title">
       <Reveal className="value-story__visual">
@@ -168,6 +194,39 @@ function ValueStory() {
           <small>以小包7入官方售價160元換算<br />實際售價依各通路活動為準</small>
         </Reveal>
       </div>
+
+      <Reveal className="brew-guide" delay={120}>
+        <div className="brew-guide__intro">
+          <p className="eyebrow">茶藝師調整的風味比例</p>
+          <h3><span>為什麼一顆</span><span>剛好是 30g</span></h3>
+          <p>不是隨意決定的大小<br />而是反覆調整甜度　香氣與食材風味後<br />找到最平衡的一杯</p>
+          <div className="brew-guide__formula"><strong>1</strong><span>顆 30g</span><i /> <strong>300–400</strong><span>ml 熱水</span></div>
+        </div>
+
+        <div className="brew-guide__daily" aria-label="日常容器沖泡比例">
+          <div className="brew-guide__daily-heading">
+            <strong>家裡沒有量杯也沒關係</strong>
+            <span>看手上的容器就知道</span>
+          </div>
+          <div className="brew-vessels">
+            {brewScenarios.map((scenario, index) => (
+              <article className={`brew-vessel brew-vessel--${scenario.id}`} key={scenario.id}>
+                <div className="brew-vessel__top"><small>{scenario.label}</small><b>0{index + 1}</b></div>
+                <h4>{scenario.vessel}</h4>
+                <strong className="brew-vessel__volume">{scenario.volume}</strong>
+                <div className="brew-vessel__cubes" aria-label={`${scenario.cubes}顆黑糖磚`}>
+                  {Array.from({ length: scenario.cubes }, (_, cubeIndex) => (
+                    <img src="/assets/flavor-cube-only.webp" alt="" key={cubeIndex} />
+                  ))}
+                  <span><b>{scenario.cubes}</b> 顆</span>
+                </div>
+                <p>{scenario.note}</p>
+              </article>
+            ))}
+          </div>
+          <p className="brew-guide__footnote">容器容量為常見規格參考　依個人口味可微調水量</p>
+        </div>
+      </Reveal>
     </section>
   );
 }
