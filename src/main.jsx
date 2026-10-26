@@ -383,7 +383,7 @@ function Flavors() {
   };
   useEffect(() => {
     flavors.forEach((item) => {
-      [item.image, item.sceneImage].forEach((src) => {
+      [item.image, item.editorialImage, item.sceneImage].forEach((src) => {
         const image = new Image();
         image.src = src;
       });
@@ -409,30 +409,22 @@ function Flavors() {
 
       <div className="moment-layout" key={`${flavor.id}-moment`} aria-live="polite" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
         <div className="moment-scene">
-          <img src={flavor.sceneImage} alt={flavor.sceneAlt} />
-          <span>{flavor.sceneLabel}</span>
-          <div className="moment-scene-flavor">
-            <img src={flavor.image} alt={`${flavor.name}原料與黑糖磚`} />
-            <div>
-              <small>此刻適合</small>
-              <strong>{flavor.name}</strong>
-              <p>{flavor.ingredients.join('・')}</p>
-            </div>
-          </div>
+          <img src={flavor.editorialImage} alt={`${flavor.name}黑糖磚與真實原料靜物攝影`} />
+          <span>{flavor.name}</span>
         </div>
 
         <div className="moment-story">
-          <p className="moment-for">{flavor.sceneFor}</p>
-          <h3>{flavor.sceneTitle.map((line) => <span key={line}>{line}</span>)}</h3>
-          <p className="moment-body">{flavor.sceneBody.split('\n').map((line) => <React.Fragment key={line}>{line}<br /></React.Fragment>)}</p>
-          <div className="moment-flavor-name">
-            <img src={flavor.image} alt={`${flavor.name}原料與黑糖磚`} />
-            <div className="moment-flavor-copy">
+          <div className="moment-context-photo">
+            <img src={flavor.sceneImage} alt={flavor.sceneAlt} />
+            <span>{flavor.sceneLabel}</span>
+          </div>
+          <div className="moment-story__copy">
+            <p className="moment-for">{flavor.sceneFor}</p>
+            <h3>{flavor.sceneTitle.map((line) => <span key={line}>{line}</span>)}</h3>
+            <p className="moment-body">{flavor.sceneBody.split('\n').map((line) => <React.Fragment key={line}>{line}<br /></React.Fragment>)}</p>
+            <div className="moment-story-tags" aria-label={`${flavor.name}主要原料`}>
               <small>這一杯　{flavor.note}</small>
-              <strong>{flavor.name}</strong>
-              <div className="moment-flavor-tags" aria-label={`${flavor.name}主要原料`}>
-                {flavor.ingredients.map((item) => <span key={item}>{item}</span>)}
-              </div>
+              <div>{flavor.ingredients.map((item) => <span key={item}>{item}</span>)}</div>
             </div>
           </div>
         </div>

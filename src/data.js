@@ -16,6 +16,7 @@ export const flavors = [
     particles: ['ginger', 'date', 'longan', 'crystal', 'ginger', 'date', 'crystal', 'longan'],
     color: '#b7652d',
     image: '/assets/flavor-ginger.webp',
+    editorialImage: '/assets/flavor-editorial-ginger.webp',
   },
   {
     id: 'longan',
@@ -34,6 +35,7 @@ export const flavors = [
     particles: ['longan', 'date', 'crystal', 'longan', 'date', 'crystal', 'longan', 'date'],
     color: '#842c2f',
     image: '/assets/flavor-longan.webp',
+    editorialImage: '/assets/flavor-editorial-longan.webp',
   },
   {
     id: 'rose',
@@ -52,6 +54,7 @@ export const flavors = [
     particles: ['rose', 'crystal', 'rose', 'herb', 'rose', 'crystal', 'herb', 'rose'],
     color: '#a7485e',
     image: '/assets/flavor-rose.webp',
+    editorialImage: '/assets/flavor-editorial-rose.webp',
   },
   {
     id: 'oolong',
@@ -70,6 +73,7 @@ export const flavors = [
     particles: ['tea', 'crystal', 'tea', 'tea', 'crystal', 'tea', 'crystal', 'tea'],
     color: '#6d5a34',
     image: '/assets/flavor-oolong.webp',
+    editorialImage: '/assets/flavor-editorial-oolong.webp',
   },
   {
     id: 'tremella',
@@ -88,6 +92,7 @@ export const flavors = [
     particles: ['tremella', 'longan', 'crystal', 'tremella', 'longan', 'crystal', 'tremella', 'longan'],
     color: '#9c713c',
     image: '/assets/flavor-tremella.webp',
+    editorialImage: '/assets/flavor-editorial-tremella.webp',
   },
 ];
 
