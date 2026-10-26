@@ -331,6 +331,40 @@ function Care() {
         </Reveal>
       </div>
 
+      <div className="care-actions" aria-labelledby="care-actions-title">
+        <Reveal className="care-actions__heading">
+          <p className="eyebrow">照顧走進真實行動</p>
+          <h3 id="care-actions-title">每一次選擇<br />都能成為另一個人的力量</h3>
+          <p>從女性自主到月經平權<br />把品牌的照顧精神　落在真正需要的地方</p>
+        </Reveal>
+
+        <div className="care-action-grid">
+          <Reveal className="care-action-card" delay={100}>
+            <figure className="care-action-card__media">
+              <img src="/assets/care/eye-power.webp" alt="糖鼎贊助愛盲基金會 EYE 的美力活動紀錄" loading="lazy" />
+              <figcaption>公益活動贊助</figcaption>
+            </figure>
+            <div className="care-action-card__body">
+              <div className="care-action-card__meta"><span>愛盲基金會</span><em>女性自主</em></div>
+              <h4>攜手「EYE 的美力」<br />為女性自主加點溫柔力量</h4>
+              <p>支持愛盲基金會募款與女性培力計畫，讓需要被看見的力量，有機會被更多人接住。</p>
+            </div>
+          </Reveal>
+
+          <Reveal className="care-action-card care-action-card--news" delay={180}>
+            <figure className="care-action-card__media">
+              <img src="/assets/care/period-poverty.webp" alt="東森新聞報導糖鼎攜手勵馨基金會關注月經貧窮" loading="lazy" />
+              <figcaption>東森新聞報導</figcaption>
+            </figure>
+            <div className="care-action-card__body">
+              <div className="care-action-card__meta"><span>勵馨基金會</span><em>月經平權</em></div>
+              <h4>關注月經貧窮<br />幫助女孩活出新自我</h4>
+              <p>透過商品募集與衛生棉捐贈，把每一次消費選擇轉化為實際支持，陪女孩更自在地向前走。</p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+
       <Reveal className="care-promise" delay={260}>
         <span>公益行動</span>
         <p>從一個人開始<br />讓照顧成為一群人的力量</p>
@@ -756,8 +790,10 @@ function AboutPage() {
               ['2019', '育幼院關懷活動', '/assets/about/about-charity-2019.jpg'],
               ['2021', '伊甸基金會參訪活動', '/assets/about/about-charity-2021.jpg'],
               ['2022', '志工淨灘活動', '/assets/about/about-charity-2022.jpg'],
-            ].map(([year, title, image], index) => (
-              <Reveal className="impact-card" delay={index * 90} key={year}>
+              ['2024', '愛盲基金會「EYE 的美力」', '/assets/care/eye-power.webp', true],
+              ['2024', '勵馨基金會月經貧窮倡議', '/assets/care/period-poverty.webp', true],
+            ].map(([year, title, image, evidence], index) => (
+              <Reveal className={cx('impact-card', evidence && 'impact-card--evidence')} delay={index * 90} key={`${year}-${title}`}>
                 <div><img src={image} alt={title} loading="lazy" /></div>
                 <p>{year}</p><h3>{title}</h3>
               </Reveal>
